@@ -1,12 +1,12 @@
 import React from 'react';
-import { Hello } from './Hello.jsx';
-import { Info } from './Info.jsx';
 
 import {Header} from './components'
+import { Main } from './pages';
 
 export const App = () => (
   <div>
     <Header /> 
-   
+    
+    <Main /> 
   </div>
 );
