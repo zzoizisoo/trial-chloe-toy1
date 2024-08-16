@@ -12,14 +12,6 @@ export default ()=>{
         Meteor.loginWithPassword('Chloe', 'isdoinggreat');
     }
 
-    const logout = () =>{ 
-        Meteor.logout()
-
-        //사실 현재 사용자가 위치하는 페이지에서 user status를 Listening 하고 있다가 상태가 변하면 강제로 리디렉션하는게 더 안전한느낌
-        FlowRouter.go('/') 
-
-    }
-
     return (
         <div className='header'>
 
@@ -36,7 +28,7 @@ export default ()=>{
 
             <div>
                 {user 
-                    ? <Button onClick={()=>FlowRouter.go(`/profile/${user._id}`)}>{user.username}</Button> 
+                    ? <Button onClick={()=>FlowRouter.go(`/profile/${user._id}`)}>{user.profile?.name}</Button> 
                     : <>
                         <Button onClick={()=>FlowRouter.go('login')}>LOG IN</Button>
                         <Button onClick={()=>FlowRouter.go('signup')}>SIGN UP</Button>
