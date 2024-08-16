@@ -10,7 +10,6 @@ export default () => {
     const handleChange = (e) =>{ 
         const {name, value} = e.target
         setLoginInfo({ ...loginInfo, [name]: value})
-
     }
 
     const handleSubmit = () =>{ 
@@ -28,13 +27,25 @@ export default () => {
 
         <form>
             <div>
-                <label htmlFor="username">Name or Email</label>
-                <input name="username" type="text" required onChange={handleChange}/>
+                <label htmlFor="username">Email</label>
+                <input 
+                    value={loginInfo.username} //이거 빼먹었었는데 왜 됨? 
+                    name="username" 
+                    type="text" 
+                    onChange={handleChange}
+                    required 
+                />
             </div>
 
             <div>
                 <label htmlFor="password">Password</label>
-                <input name="password" type="password" required onChange={handleChange}/> 
+                <input
+                    value={loginInfo.password} //이거 빼먹었었는데 왜 됨? 
+                    name="password" 
+                    type="password" 
+                    onChange={handleChange}
+                    required 
+                /> 
             </div>
 
             <Button onClick={() => FlowRouter.go('/')}> Cancel </Button>
