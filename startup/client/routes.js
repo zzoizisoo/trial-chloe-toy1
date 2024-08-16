@@ -2,7 +2,7 @@ import React from 'react'
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { mount } from 'react-mounter';
 import { MainLayout } from '../../imports/ui/layouts/MainLayout';
-import { SignUp, Login, Favorite, Main, PostWrite } from '../../imports/ui/pages'
+import { SignUp, Login, Favorite, Main, PostWrite, Profile } from '../../imports/ui/pages'
 
 // DISABLE QUERY STRING COMPATIBILITY
 // WITH OLDER FlowRouter AND Meteor RELEASES
@@ -48,8 +48,7 @@ const loggedIn = FlowRouter.group({
 })
 
 
-// requires log in
-// redirect user to sign up page when user status change
+// redirect user to login page when user status change
 loggedIn.route('/post-write', { 
     name: 'post-write',
     action(){ 
@@ -59,13 +58,22 @@ loggedIn.route('/post-write', {
     }
 })
 
-// requires log in
-// redirect user to sign up page when user status change
+// redirect user to login page when user status change
 loggedIn.route('/favorite/:uid', { 
     name: 'favorite',
     action({uid}){ 
         mount(MainLayout, {
             content: <Favorite/> 
+        })
+    }
+})
+
+// redirect user to login page when user status change
+loggedIn.route('/profile/:uid', { 
+    name: 'profile',
+    action({uid}){ 
+        mount(MainLayout, {
+            content: <Profile/> 
         })
     }
 })

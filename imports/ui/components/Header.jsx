@@ -35,7 +35,12 @@ export default ()=>{
             </h1>
 
             <div>
-                {user ?<Button onClick={logout}>{user?.username}</Button> : <Button onClick={login}>Log in</Button>}
+                {user 
+                    ? <Button onClick={()=>FlowRouter.go(`/profile/${user._id}`)}>{user.username}</Button> 
+                    : <>
+                        <Button onClick={()=>FlowRouter.go('login')}>LOG IN</Button>
+                        <Button onClick={()=>FlowRouter.go('signup')}>SIGN UP</Button>
+                      </>}
             </div>
         </div>
     )
