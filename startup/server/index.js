@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import '../../imports/api/users/users'
 import { PostsCollection, SamplePosts } from '../../imports/api/posts/posts';
 
 

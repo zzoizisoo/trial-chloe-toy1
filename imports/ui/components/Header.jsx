@@ -8,10 +8,6 @@ import Button from '@mui/joy/Button';
 export default ()=>{ 
     const user = useTracker(() => Meteor.user());
 
-    const login = () => { 
-        Meteor.loginWithPassword('Chloe', 'isdoinggreat');
-    }
-
     return (
         <div className='header'>
 

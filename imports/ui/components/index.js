@@ -1,3 +1,4 @@
 import Header from './Header'
 import PostCard from './PostCard'
-export {Header, PostCard}
+import UserList from './UserList'
+export {Header, PostCard, UserList}
