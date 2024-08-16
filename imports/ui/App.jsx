@@ -5,8 +5,8 @@ import { Main } from './pages';
 
 export const App = () => (
   <div>
-    <Header /> 
+    {/* <Header /> 
     
-    <Main /> 
+    <Main />  */}
   </div>
 );
