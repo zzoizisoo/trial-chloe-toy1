@@ -17,10 +17,18 @@ export default ()=>{
 
     return (
         <div className='header'>
+
+            {user && 
+            <div>
+                <Button>Blog Write</Button>
+                <Button>Favorite</Button>
+            </div>}
+
+
             <h1>[Chloe] Toy Project</h1>
 
             <div>
-                {!user ? <Button onClick={login}>Log in</Button> : <Button onClick={logout}>{user?.username}</Button>}
+                {user ?<Button onClick={logout}>{user?.username}</Button> :  <Button onClick={login}>Log in</Button>}
             </div>
         </div>
     )
