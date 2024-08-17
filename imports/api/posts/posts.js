@@ -3,7 +3,7 @@ import { Mongo } from 'meteor/mongo';
 
 export const PostsCollection = new Mongo.Collection('posts')
 
-const scheme = {
+// const scheme = {
 // _id
 // title
 // description
@@ -12,7 +12,7 @@ const scheme = {
 // createdBy
 // viewCount
 // createdAt
-  };
+//   };
 
 
 export const SamplePosts = [{

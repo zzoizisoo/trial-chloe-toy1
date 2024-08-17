@@ -1,4 +1,6 @@
 import Header from './Header'
 import PostCard from './PostCard'
 import UsersPanels from './UsersPanels'
-export {Header, PostCard, UsersPanels}
+import ChatRoom from './ChatRoom'
+export {Header, PostCard, UsersPanels, ChatRoom}
+
