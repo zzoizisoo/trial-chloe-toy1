@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
+import '../../imports/api/users/methods'
 import '../../imports/api/chats/methods'
 import '../../imports/api/posts/methods'
 

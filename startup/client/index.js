@@ -6,7 +6,7 @@ import { App } from '../../imports/ui/App';
 import './routes'
 
 
-export const s3 = new S3Client({
+export const S3 = new S3Client({
   region: 'ap-northeast-2',
   credentials: {
     accessKeyId: Meteor.settings.public.S3_ACCESSKEY_ID,
@@ -34,5 +34,4 @@ Meteor.startup(() => {
   const container = document.getElementById('react-target');
   const root = createRoot(container);
   root.render(<App />);
-  s3_start();
 });

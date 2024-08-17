@@ -49,6 +49,7 @@ const SearchBar = ({ searchInput, onInputChange }) => {
 
 const UserListItem = ({ user, handleSelectUser }) => {
     return <div key={user._id} onClick={()=>handleSelectUser(user)}>
+        <img style={{width: 40, height:40}} src={user.profile?.profileImgUrl || ""} alt=""/>
         {user.profile?.name}
     </div>
 }
