@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { PostsCollection } from "./posts";
+import { PostsCollection } from "./collection";
 
 Meteor.methods({
     async getPosts() {

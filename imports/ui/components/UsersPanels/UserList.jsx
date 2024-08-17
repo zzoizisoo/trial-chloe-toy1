@@ -28,9 +28,9 @@ export default ({
     }
 
     return (
-        <div>
+        <div style={{flex: '1.5', display: 'flex', flexDirection: 'column'}}>
             <SearchBar searchInput={searchInput} onInputChange={onInputChange} />
-            <div>
+            <div style={{display:'flex',flexDirection:'column', overflow: 'auto'}}>
                 {/* Bypassing props */}
                 {users && users.map(u => <UserListItem handleSelectUser={handleSelectUser} key={u._id} user={u} />)} 
             </div>

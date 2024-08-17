@@ -4,14 +4,14 @@ import { AiFillMail } from "react-icons/ai";
 
 export default ({selectedUser}) =>{ 
     const user = Meteor.user();
-    return <div> 
-        <div>
+    return <div style={{flex:'1 1 0', display: 'flex', flexDirection: 'column'}}> 
+        <div style={{flex: '1.5 1 0'}}>
             {selectedUser.profile?.profileImgUrl}  
             {selectedUser.profile?.name}  
         </div>
 
         {/* Only authenticated user available */}
-        <div>
+        <div style={{flex: '1 1 0'}}>
             {user ? 
                     <>
                         <div>
@@ -23,7 +23,7 @@ export default ({selectedUser}) =>{
                             {selectedUser.emails[0]?.address}  
                         </div>
                     </>
-                 : <> Please Log in </>
+                 : <div> Please Log in </div>
             }
         </div>
     </div>

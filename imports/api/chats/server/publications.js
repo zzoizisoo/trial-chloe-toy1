@@ -1,5 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import { ChatsCollection } from "../chats";
+import { ChatsCollection } from "../collection";
 
 Meteor.publish('chatLogs', function(){ 
    return ChatsCollection.find({})
