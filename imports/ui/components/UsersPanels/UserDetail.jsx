@@ -1,4 +1,6 @@
 import React from "react"
+import { FaPhone } from "react-icons/fa6";
+import { AiFillMail } from "react-icons/ai";
 
 export default ({selectedUser}) =>{ 
     const user = Meteor.user();
@@ -12,8 +14,14 @@ export default ({selectedUser}) =>{
         <div>
             {user ? 
                     <>
-                        <div>{selectedUser.profile?.phoneNumber}</div>
-                        <div>{selectedUser.emails[0]?.address}  </div>
+                        <div>
+                            <FaPhone />
+                            {selectedUser.profile?.phoneNumber || '-' }
+                        </div>
+                        <div>
+                            <AiFillMail />
+                            {selectedUser.emails[0]?.address}  
+                        </div>
                     </>
                  : <> Please Log in </>
             }
