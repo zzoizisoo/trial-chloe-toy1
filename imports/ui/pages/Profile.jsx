@@ -25,8 +25,8 @@ export default () => {
         })
 
         try {
-            const response = await S3.send(command);
-            console.log('s3 response', response);
+            const {ETag} = await S3.send(command);
+            console.log('s3 response', ETag);
             const url = `https://${Meteor.settings.public.S3_BUCKET}.s3.ap-northeast-2.amazonaws.com/userProfileImg/${user._id}.png`
             Meteor.callAsync('updateUserProfileImg', url).then((res)=> console.log(res))
 

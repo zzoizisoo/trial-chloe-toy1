@@ -3,6 +3,8 @@ import { useTracker } from 'meteor/react-meteor-data';
 import React, { useState } from "react"
 import Input from '@mui/joy/Input';
 import { IoSearch } from "react-icons/io5";
+import ProfileImg from '../ProfileImg';
+
 
 export default ({
     handleSelectUser
@@ -49,9 +51,8 @@ const SearchBar = ({ searchInput, onInputChange }) => {
 
 const UserListItem = ({ user, handleSelectUser }) => {
     return <div key={user._id} onClick={()=>handleSelectUser(user)}>
-        <img style={{width: 30, height:30}} 
-             src={user.profile?.profileImgUrl || 'https://cdn.vectorstock.com/i/2000v/08/19/gray-photo-placeholder-icon-design-ui-vector-35850819.avif'} 
-             alt=""/>
+        <ProfileImg userId={user._id}/>
+        
         {user.profile?.name}
     </div>
 }

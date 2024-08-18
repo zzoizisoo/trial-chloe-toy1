@@ -3,6 +3,7 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import Button from '@mui/joy/Button';
+import ProfileImg from './ProfileImg';
 
 
 export default ()=>{ 
@@ -24,12 +25,9 @@ export default ()=>{
 
             <div>
                 {user 
-                    ? <div className='flex' onClick={()=>FlowRouter.go(`/profile/${user._id}`)}>
-                        
+                    ? <div className='flex' onClick={()=>FlowRouter.go(`/profile/${user._id}`)}>  
                         <div>{user.profile?.name}</div>
-                        <img style={{width: 40, height:40}} 
-                                    src={user.profile?.profileImgUrl || 'https://cdn.vectorstock.com/i/2000v/08/19/gray-photo-placeholder-icon-design-ui-vector-35850819.avif'} 
-                                    alt=""/>
+                        <ProfileImg userId={user._id} size={40}/> 
                      </div> 
                     : <>
                         <Button onClick={()=>FlowRouter.go('login')}>LOG IN</Button>
