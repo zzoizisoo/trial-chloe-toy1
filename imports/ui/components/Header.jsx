@@ -24,7 +24,13 @@ export default ()=>{
 
             <div>
                 {user 
-                    ? <Button onClick={()=>FlowRouter.go(`/profile/${user._id}`)}>{user.profile?.name}</Button> 
+                    ? <div className='flex' onClick={()=>FlowRouter.go(`/profile/${user._id}`)}>
+                        
+                        <div>{user.profile?.name}</div>
+                        <img style={{width: 40, height:40}} 
+                                    src={user.profile?.profileImgUrl || 'https://cdn.vectorstock.com/i/2000v/08/19/gray-photo-placeholder-icon-design-ui-vector-35850819.avif'} 
+                                    alt=""/>
+                     </div> 
                     : <>
                         <Button onClick={()=>FlowRouter.go('login')}>LOG IN</Button>
                         <Button onClick={()=>FlowRouter.go('signup')}>SIGN UP</Button>

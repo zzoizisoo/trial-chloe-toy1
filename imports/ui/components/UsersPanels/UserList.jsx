@@ -49,7 +49,9 @@ const SearchBar = ({ searchInput, onInputChange }) => {
 
 const UserListItem = ({ user, handleSelectUser }) => {
     return <div key={user._id} onClick={()=>handleSelectUser(user)}>
-        <img style={{width: 40, height:40}} src={user.profile?.profileImgUrl || ""} alt=""/>
+        <img style={{width: 30, height:30}} 
+             src={user.profile?.profileImgUrl || 'https://cdn.vectorstock.com/i/2000v/08/19/gray-photo-placeholder-icon-design-ui-vector-35850819.avif'} 
+             alt=""/>
         {user.profile?.name}
     </div>
 }

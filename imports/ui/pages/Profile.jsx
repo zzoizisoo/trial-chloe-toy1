@@ -37,12 +37,16 @@ export default () => {
 
     return (
         <><h1> Profile</h1>
+            <img 
+                style={{width: 200, height:200}}
+                src={user.profile?.profileImgUrl
+                     || 'https://cdn.vectorstock.com/i/2000v/08/19/gray-photo-placeholder-icon-design-ui-vector-35850819.avif'} 
+             alt=""/> 
+            <input type="file" accept='image/*' onChange={handleImgChange} />
+    
             <div>{user.profile.name}</div>
             <div>{user.emails && user.emails[0]?.address}</div>
 
-            <form>
-                <input type="file" accept='image/*' onChange={handleImgChange} />
-            </form>
 
             <div>
                 <Button> Cancel </Button>
