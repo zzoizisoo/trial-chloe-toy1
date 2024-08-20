@@ -27,7 +27,7 @@ export default ()=>{
                 {user 
                     ? <div className='flex' onClick={()=>FlowRouter.go(`/profile/${user._id}`)}>  
                         <div>{user.profile?.name}</div>
-                        <ProfileImg userId={user._id} size={40}/> 
+                        <ProfileImg src={user.profile?.profileImgUrl} size={40}/> 
                      </div> 
                     : <>
                         <Button onClick={()=>FlowRouter.go('login')}>LOG IN</Button>

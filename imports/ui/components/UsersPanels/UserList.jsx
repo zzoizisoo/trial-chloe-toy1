@@ -51,7 +51,7 @@ const SearchBar = ({ searchInput, onInputChange }) => {
 
 const UserListItem = ({ user, handleSelectUser }) => {
     return <div key={user._id} onClick={()=>handleSelectUser(user)}>
-        <ProfileImg userId={user._id}/>
+        <ProfileImg src={user.profile?.profileImgUrl}/>
         
         {user.profile?.name}
     </div>
