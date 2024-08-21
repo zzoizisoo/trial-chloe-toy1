@@ -1,13 +1,14 @@
 import React from "react"
+import { useTracker } from 'meteor/react-meteor-data';
 import { FaPhone } from "react-icons/fa6";
 import { AiFillMail } from "react-icons/ai";
 import ProfileImg from "../ProfileImg";
 
 export default ({ selectedUser }) => {
-    const user = Meteor.user();
+    const user = useTracker(()=>Meteor.user()) 
     return <div style={{ flex: '1 1 0', display: 'flex', flexDirection: 'column' }}>
         <div style={{ flex: '1.5 1 0' }}>
-            <ProfileImg userId={selectedUser._id} size={200}/>
+            <ProfileImg src={selectedUser.profile?.profileImgUrl  } size={200}/>
             <div>
                 {selectedUser.profile?.name}
             </div>
