@@ -6,22 +6,29 @@ import OtherChatItem from "./OtherChatItem"
 import { ChatsCollection } from "../../../api/chats/collection";
 
 // TODOS.BUG: 첫 마운트에서는 Profile imgs 가 로드되지않음. 
+// 와!! 내가 뭘 짰는지 나도 모르는 ^^
 export default () => {
     const user = useTracker(() => Meteor.user());
     const PAGINATION_SIZE = 10;
     const [pageLength, setPageLength] = useState(PAGINATION_SIZE)
     const [chatUids, setChatUids] = useState([])
 
+    const [isChatReady, setIsChatReady] = useState(false);
+    const [isProfileReady, setIsProfileReady] = useState(false);
+
     // Page size에 따라 Subscription update
     useEffect(() => { 
-        Meteor.subscribe('chatLogs', pageLength)
-    },
-        [pageLength])
+       Meteor.subscribe('chatLogs', pageLength, {
+        onReady: () => setIsChatReady(true)
+       })
+    }, [pageLength])
 
-    // Chatting 에 참여한 유저들의 profile subscribe
+    // Chatting 에 보여지는 유저들의 profile subscription update
     useEffect(() => {
         if (chatUids.length > 0) {
-            Meteor.subscribe('usersProfileImgs', chatUids)
+            Meteor.subscribe('usersProfileImgs', chatUids, { 
+                onReady: () => setIsProfileReady(true)
+            })
         }
     }, [chatUids])
 
@@ -30,7 +37,6 @@ export default () => {
         setChatUids([...new Set(cc.map(c => c.createdBy))])
         return cc;
     }, [])
-
 
     // Chat item에 사용자 프로필 이미지 추가
     const chatsWithProfile = useTracker(() => {
@@ -45,7 +51,8 @@ export default () => {
             return imgUrl ? { ...c, profileImgUrl: imgUrl } : c
         })
         return result
-    }, [chats])
+    }, [chats, isChatReady, isProfileReady])
+
 
     return <div style={{ display: 'flex', flex: '1.5 1 0' }}>
         {user
