@@ -2,8 +2,9 @@ import React from "react"
 import ProfileImg from "../ProfileImg"
 
 export default ({chat, imgUrl}) =>{ 
-    return <div style={{display:'flex', alignSelf: 'flex-start'}}>
-        
+    const date = new Date(chat.createdAt);
+
+    return <div style={{display:'flex', alignSelf: 'flex-start'}}>        
         <div>
             <ProfileImg size={30} src={imgUrl}/> 
         </div>
@@ -11,7 +12,7 @@ export default ({chat, imgUrl}) =>{
             {chat.content}
         </div>
         <div>
-            {`${new Date(chat.createdAt)}`}
+         {`${date.toLocaleString('ko-kr')}`}
         </div>
     </div>
 }

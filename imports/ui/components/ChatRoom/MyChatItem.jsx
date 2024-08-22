@@ -2,9 +2,11 @@ import React from "react"
 import ProfileImg from "../ProfileImg"
 
 export default ({ chat,imgUrl }) => {
+    const date = new Date(chat.createdAt);
+    
     return <div style={{ display:'flex', alignSelf: 'flex-end' }}>
         <div>
-            {`${new Date(chat.createdAt)}`}
+            {`${date.toLocaleString('ko-kr')}`}
         </div>
         <div>
             {chat.content}
