@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor'
-import { useTracker } from 'meteor/react-meteor-data';
+import { useTracker, useSubscribe } from 'meteor/react-meteor-data';
 import React, { useState } from "react"
 import Input from '@mui/joy/Input';
 import { IoSearch } from "react-icons/io5";
@@ -9,7 +9,7 @@ import ProfileImg from '../ProfileImg';
 export default ({
     handleSelectUser
 }) => {
-    Meteor.subscribe('allUserProfile')
+    const usersProfilesReady = useSubscribe('usersProfiles')
     const [searchInput, setSearchInput] = useState('')
 
     const users = useTracker(() =>
