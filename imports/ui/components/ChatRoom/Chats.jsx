@@ -1,10 +1,9 @@
 import React, { useState } from "react"
 import { useTracker, useSubscribe } from 'meteor/react-meteor-data';
-import InputArea from "./InputArea"
 import MyChatItem from "./MyChatItem"
 import OtherChatItem from "./OtherChatItem"
 import { ChatsCollection } from "../../../api/chats/collection";
-import Chats from "./Chats";
+
 export default () => {
     const user = useTracker(() => Meteor.user(),[]);
     const PAGINATION_SIZE = 5;
@@ -20,6 +19,7 @@ export default () => {
     const chatUids = [...new Set(chats.map(c => c.createdBy))]
     const isUserLoading = useSubscribe('usersProfileImgs', chatUids)
     const users = useTracker(() => {
+        console.log('calling user fetch')
         return Meteor.users.find({ _id: { $in: chatUids } }, {
             fields: {
                 'profile.profileImgUrl': 1
