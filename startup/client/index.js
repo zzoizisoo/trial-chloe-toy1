@@ -5,7 +5,7 @@ import { App } from '../../imports/ui/App';
 import './routes'
 
 Meteor.startup(() => {
-  const container = document.getElementById('react-target');
-  const root = createRoot(container);
-  root.render(<App />);
+  // const container = document.getElementById('react-root');
+  // const root = createRoot(container);
+  // root.render(<App />);
 });

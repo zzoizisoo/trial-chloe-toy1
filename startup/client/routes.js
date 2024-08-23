@@ -41,7 +41,7 @@ FlowRouter.route('/signup', {
 const loggedIn = FlowRouter.group({
     name: 'loggedIn',
     triggersEnter: [(context, redirect) => { 
-        if(!Meteor.user()){ 
+        if(!Meteor.user() && !Meteor.loggingIn()){ 
             redirect('/login')    
         }      
     }]
