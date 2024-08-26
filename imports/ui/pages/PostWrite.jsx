@@ -34,12 +34,13 @@ export default () => {
 
         try {
             let result;
+            // TODOS: 이미지 업로드를 나중에..? 
             if (postImage) {
                 const { _str: postId } = new Mongo.ObjectID();
                 const fileId = uuidv4();
                 const imageUrl = await UploadObject(`postImg/${postId}/${fileId}.png`, postImage);
                 result = await Meteor.callAsync('addPost', {
-                    _id: postId,
+                    // _id: postId,
                     title: post.title,
                     description: post.description,
                     content: content,
