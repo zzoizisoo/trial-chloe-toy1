@@ -1,3 +1,4 @@
+import { Mongo } from 'meteor/mongo';
 import { Meteor } from "meteor/meteor";
 import { PostsCollection } from "./collection";
 
@@ -12,11 +13,12 @@ Meteor.methods({
       return post
     }, 
 
-    async addPost({title, description, imageUrl, content}){ 
+    async addPost({_id, title, description, imageUrl, content}){ 
       // TODOS: add validation
       if(!this.userId) return;
 
-      const post = await PostsCollection.insertAsync({
+      const postId = await PostsCollection.insertAsync({
+        _id: _id || new Mongo.ObjectID()._str,
         title: title,
         description: description,
         imageUrl: imageUrl || null,
@@ -25,7 +27,6 @@ Meteor.methods({
         createdAt: Date.now(),
         createdBy: this.userId
       })
-      console.log(post)
-      return post
+      return postId
     }
 });

@@ -35,7 +35,7 @@ export default () => {
     return <div>
         <h1>{post.title}</h1>
         <p>{post.description}</p>
-        {post.imageUrl && <img src={post.imageUrl} />}
+        {post.imageUrl && <img style={{width:'100%'}} src={post.imageUrl} />}
 
         <p>{post.content}</p>
 
