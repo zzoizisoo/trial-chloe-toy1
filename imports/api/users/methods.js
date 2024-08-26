@@ -7,7 +7,6 @@ Meteor.methods({
       });
     },
 
-
     async updateUserProfile(userId, newProfile) {
       if(userId !== this.userId) return;
       const user = await Meteor.users.findOneAsync({_id: userId}) 
@@ -29,5 +28,11 @@ Meteor.methods({
       } catch(error) { 
         throw new Meteor.Error('Error happened while updating user profile', error)
       }
+    },
+
+    async getUserInfo(userId){ 
+      if(!this.userId) return;
+      const user = await Meteor.users.findOneAsync({_id: userId })
+      return user;
     }
 });

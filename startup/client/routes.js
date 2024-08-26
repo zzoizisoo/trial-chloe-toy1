@@ -2,7 +2,7 @@ import React from 'react'
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { mount } from 'react-mounter';
 import { MainLayout } from '../../imports/ui/layouts/MainLayout';
-import { SignUp, Login, Favorite, Main, PostWrite, Profile } from '../../imports/ui/pages'
+import { SignUp, Login, Favorite, Main, PostWrite, Profile, Post} from '../../imports/ui/pages'
 
 // DISABLE QUERY STRING COMPATIBILITY
 // WITH OLDER FlowRouter AND Meteor RELEASES
@@ -25,7 +25,6 @@ FlowRouter.route('/login', {
         })
     }
 })
-
 
 FlowRouter.route('/signup', { 
     name: 'signup',
@@ -74,6 +73,15 @@ loggedIn.route('/profile/:uid', {
     action({uid}){ 
         mount(MainLayout, {
             content: <Profile/> 
+        })
+    }
+})
+
+loggedIn.route('/post/:pid', { 
+    name: 'post',
+    action({pid}){ 
+        mount(MainLayout, {
+            content: <Post postId={pid}/>
         })
     }
 })

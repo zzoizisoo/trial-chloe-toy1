@@ -8,10 +8,12 @@ export default ({
     // likesCount,
     // commentsCount,
     viewCount,
+    onClick
+
 })=>{
     return (
-    <Grid xs={5} md={1}>
-        <Card
+    <Grid xs={5} md={1} onClick={onClick}>
+        <Card 
             orientation="vertical"
             size="sm"
             variant="soft"
