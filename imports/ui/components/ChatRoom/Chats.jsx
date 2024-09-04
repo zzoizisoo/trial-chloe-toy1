@@ -11,15 +11,12 @@ export default () => {
 
     // CHATS
     const isChatLoading = useSubscribe('chatLogs', pageLength)
-    const chats = useTracker(() => ChatsCollection.find({}, { sort: { createdAt: -1 } }).fetch()
-        , [pageLength], (prev, next) => prev.length > next.length)
-
+    const chats = useTracker(() => ChatsCollection.find({}, { sort: { createdAt: -1 }, limit: pageLength }).fetch(),[pageLength],(prev, next) => prev.length > next.length)
 
     // PROFILES
     const chatUids = [...new Set(chats.map(c => c.createdBy))]
     const isUserLoading = useSubscribe('usersProfileImgs', chatUids)
     const users = useTracker(() => {
-        console.log('calling user fetch')
         return Meteor.users.find({ _id: { $in: chatUids } }, {
             fields: {
                 'profile.profileImgUrl': 1
@@ -27,17 +24,14 @@ export default () => {
         }).fetch();
     })
 
-
-    const result = useTracker(() => {
-        return chats.map(chat => {
-            const imgUrl = users.find((user) => user._id === chat.createdBy)?.profile?.profileImgUrl
-            return imgUrl ? { ...chat, profileImgUrl: imgUrl } : chat
-        })
+    const chatsWithProfileImg = chats.map(chat => {
+        const imgUrl = users.find((user) => user._id === chat.createdBy)?.profile?.profileImgUrl
+        return imgUrl ? { ...chat, profileImgUrl: imgUrl } : chat
     })
 
     return <div style={{ display: 'flex', flexDirection: "column-reverse", overflow: 'auto' }}>
 
-        {result && result.map(chat => chat.createdBy === user._id
+        {chatsWithProfileImg && chatsWithProfileImg.map(chat => chat.createdBy === user._id
             ? <MyChatItem key={chat._id} chat={chat} imgUrl={chat.profileImgUrl} />
             : <OtherChatItem key={chat._id} chat={chat} imgUrl={chat.profileImgUrl} />)}
         <button onClick={() => setPageLength(pageLength + PAGINATION_SIZE)}>Load more</button>
