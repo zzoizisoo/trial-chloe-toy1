@@ -19,6 +19,8 @@ export default () => {
     const [newProfileImg, setNewProfileImg] = useState(undefined)
     const [isSubmitLoading, setIsSubmitLoading] = useState(false)
 
+    useEffect(()=>{console.log(newProfileImg)},[newProfileImg])
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUserInfo({ ...userInfo, [name]: value })

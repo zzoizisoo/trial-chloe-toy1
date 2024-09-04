@@ -8,7 +8,7 @@ export default ({ selectedUser }) => {
     const user = useTracker(()=>Meteor.user()) 
     return <div style={{ flex: '1 1 0', display: 'flex', flexDirection: 'column' }}>
         <div style={{ flex: '1.5 1 0' }}>
-            <ProfileImg src={selectedUser.profile?.profileImgUrl  } size={200}/>
+            <ProfileImg src={selectedUser.profile?.profileImgUrl} size={200}/>
             <div>
                 {selectedUser.profile?.name}
             </div>
