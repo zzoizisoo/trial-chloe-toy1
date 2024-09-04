@@ -1,15 +1,14 @@
 import React from 'react';
+import ProfileImg from '../ProfileImg';
 
 export default ({comment}) =>{ 
-    console.log(comment)
+    const createdAtInLocaleString = new Date(comment.createdAt).toLocaleString('ko-kr')
 
     return <div style={{display:'flex'}}>
 
-        <div> author profile image goes here</div>
-
-        <div>
-            <div>author nickname goes here, and createdAt as well</div>
-
+        <div> <ProfileImg src={comment.user.profile.profileImgUrl}/></div>
+        <div>          
+            <div>{comment.user.profile.name} {createdAtInLocaleString}</div>
             <div>{comment.content}</div>
         </div>
 
