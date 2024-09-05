@@ -4,6 +4,9 @@ import { mount } from 'react-mounter';
 import { MainLayout } from '../../imports/ui/layouts/MainLayout';
 import { SignUp, Login, Favorite, Main, PostWrite, Profile, Post} from '../../imports/ui/pages'
 
+// TODO
+// add undefined router ㅋㅋ
+
 // DISABLE QUERY STRING COMPATIBILITY
 // WITH OLDER FlowRouter AND Meteor RELEASES
 FlowRouter.decodeQueryParamsOnce = true;
