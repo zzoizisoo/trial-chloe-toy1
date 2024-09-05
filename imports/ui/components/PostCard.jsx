@@ -5,7 +5,7 @@ export default ({
     title,
     description,
     imageUrl,
-    // likesCount,
+    // favorCount,
     // commentsCount,
     viewCount,
     onClick

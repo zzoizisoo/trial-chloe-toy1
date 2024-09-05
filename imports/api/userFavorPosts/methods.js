@@ -8,14 +8,13 @@ Meteor.methods({
 
         const post = await PostsCollection.findOneAsync({_id: postId})
         if(!post) return;
-        // 이미 있는 경우 -> liked: true
-        // 없는경우 insert
+        
         await UserFavorPosts.upsertAsync({
             postId: postId,
             userId: this.userId,
         },{
             $set:{
-                isLiked: true
+                isFavored: true
             }
         })
     },
@@ -25,6 +24,6 @@ Meteor.methods({
         const post = await PostsCollection.findOneAsync({_id: postId})
         if(!post) return;
 
-        await UserFavorPosts.updateAsync({postId:postId, userId: this.userId}, {$set: {isLiked: false}})
+        await UserFavorPosts.updateAsync({postId:postId, userId: this.userId}, {$set: {isFavored: false}})
     }
 })

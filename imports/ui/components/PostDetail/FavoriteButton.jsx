@@ -11,14 +11,14 @@ import { UserFavorPosts } from '../../../api/userFavorPosts/collection';
 export default FavoriteButton = () => {
     const postId = FlowRouter.getParam("pid")
 
-    const isLikeLoading = useSubscribe('postIsLikedByThisUser', postId)
-    const isLikedPost = useFind(() => UserFavorPosts.find({ postId: postId, userId: Meteor.userId() }), [postId, Meteor.userId()])
+    const isLoading = useSubscribe('userFavorPost', postId)
+    const userFavorPosts = useFind(() => UserFavorPosts.find({ postId: postId, userId: Meteor.userId() }), [postId, Meteor.userId()])
 
-    const handleToggleLike = () => {
-        Meteor.callAsync( isLikedPost[0]?.isLiked ? 'unFavorite' : 'addFavorite', postId)
+    const handleToggleFavor = () => {
+        Meteor.callAsync( userFavorPosts[0]?.isFavored ? 'unFavorite' : 'addFavorite', postId)
     }
 
-    return <Button onClick={handleToggleLike} sx={{position: 'absolute', 'top': 0, 'right': 0}}>
-        {isLikeLoading() ? <></> : isLikedPost[0]?.isLiked ? <IoIosHeart /> : <IoIosHeartEmpty />}
+    return <Button onClick={handleToggleFavor} sx={{position: 'absolute', 'top': 0, 'right': 0}}>
+        {isLoading() ? <></> : userFavorPosts[0]?.isFavored ? <IoIosHeart /> : <IoIosHeartEmpty />}
     </Button>
 }
