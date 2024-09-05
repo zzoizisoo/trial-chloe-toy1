@@ -47,10 +47,10 @@ export default () => {
             if (newProfileImg) {
                 const fileId = uuidv4();
                 const url = await UploadObject(`userProfileImg/${fileId}.png`, newProfileImg)
-                res = await Meteor.callAsync('updateUserProfile', user._id, { ...userInfo, profileImgUrl: url })
+                res = await Meteor.callAsync('updateUserProfile', { ...userInfo, profileImgUrl: url })
             }
             // TODOS: 암호변경도 분리해야되나? ㅁㅊ..... 왜냐면 암호화가 전혀 안될거같애 UX가 망했어
-            else res = await Meteor.callAsync('updateUserProfile', user._id, userInfo)
+            else res = await Meteor.callAsync('updateUserProfile', userInfo)
             //비밀번호 바꾼 다음 로그아웃 시킬 거임? 일단 지금은 아님. 다른 디바이스에서만 로그아웃 하면 되지않나? 
             console.log(res)
             setUserInfo(INITIAL_PROFILE_STATE)
