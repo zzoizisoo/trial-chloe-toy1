@@ -12,13 +12,17 @@ export default FavoriteButton = () => {
     const postId = FlowRouter.getParam("pid")
 
     const isLoading = useSubscribe('userFavorPost', postId)
-    const userFavorPosts = useFind(() => UserFavorPosts.find({ postId: postId, userId: Meteor.userId() }), [postId, Meteor.userId()])
+    const userFavorPost = useTracker(()=>{
+        return UserFavorPosts.findOne({postId, userId: Meteor.userId()})
+    }, 
+    [postId, Meteor.userId()])
 
     const handleToggleFavor = () => {
-        Meteor.callAsync( userFavorPosts[0]?.isFavored ? 'unFavorite' : 'addFavorite', postId)
+        Meteor.callAsync('toggleFavorite', postId, userFavorPost?.isFavored ? false : true)
     }
 
+    // 로오오오딩이 끝났는데도 왜 userFavorPost가 undefined 인지 🤔
     return <Button onClick={handleToggleFavor} sx={{position: 'absolute', 'top': 0, 'right': 0}}>
-        {isLoading() ? <></> : userFavorPosts[0]?.isFavored ? <IoIosHeart /> : <IoIosHeartEmpty />}
+        {isLoading() ? <></> : userFavorPost?.isFavored ? <IoIosHeart /> : <IoIosHeartEmpty />}
     </Button>
 }
