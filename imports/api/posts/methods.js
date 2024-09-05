@@ -1,12 +1,24 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
 import { PostsCollection } from "./collection";
+import { UserFavorPosts } from "../userFavorPosts/collection";
 
 Meteor.methods({
   async getPosts() {
     const posts = await PostsCollection.find(
       {},
       { sort: { createdAt: -1 } }
+    ).fetchAsync();
+    return posts;
+  },
+
+  async getFavoritePosts(){ 
+    if(!this.userId) throw new Meteor.Error('anauthorized');
+    const userFavoritePosts = await UserFavorPosts.find({userId: this.userId, isFavored: true}).fetchAsync()
+    const postIds = userFavoritePosts.map(item => item.postId)
+    const posts = await PostsCollection.find(
+      {_id: { $in: postIds}},
+      { sort: { createdAt: -1 } } //여기서는 favorite에 추가된 순서대로 줘야하나? 그럴같은데 🤦‍♀️
     ).fetchAsync();
     return posts;
   },
