@@ -2,17 +2,21 @@ import { Meteor } from "meteor/meteor";
 import { CommentsCollection } from "./collection";
 
 Meteor.methods({
-    async addComment({postId, content, createdBy}){ 
-        if(!this.userId) return; //TODOS: 어케되나 보기
-        const comment = await CommentsCollection.insertAsync({
-            postId, content, createdBy,
-            createdAt: Date.now()
-        })
-        return comment
-    },
+  async addComment({ postId, content }) {
+    if (!this.userId) throw new Meteor.Error("not authorized");
 
-    async getComments(postId){ 
-        const comments = await CommentsCollection.find({postId: postId}).fetchAsync({})
-        return comments
-    }
-})
+    const document = {
+      postId,
+      content,
+      createdBy: this.userId,
+      createdAt: new Date(),
+    };
+
+    CommentsCollection.schema.validate(document);
+    await CommentsCollection.insertAsync(document);
+  },
+
+  async getComments(postId) {
+    return await CommentsCollection.find({ postId }).fetchAsync();
+  },
+});
