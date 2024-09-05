@@ -7,7 +7,7 @@ import InputArea from "./InputArea"
 
 
 export default () => {
-    const user = useTracker(() => Meteor.user(),[]);
+    const user = useTracker(() => Meteor.user());
     
     return <div style={{ display: 'flex', flex: '1.5 1 0' }}>
         {user 

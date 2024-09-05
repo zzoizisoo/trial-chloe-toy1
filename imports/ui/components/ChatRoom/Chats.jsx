@@ -5,7 +5,7 @@ import OtherChatItem from "./OtherChatItem"
 import { ChatsCollection } from "../../../api/chats/collection";
 
 export default () => {
-    const user = useTracker(() => Meteor.user(),[]);
+    const user = useTracker(() => Meteor.user());
     const PAGINATION_SIZE = 5;
     const [pageLength, setPageLength] = useState(PAGINATION_SIZE)
 

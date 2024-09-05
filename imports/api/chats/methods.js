@@ -1,21 +1,18 @@
 
 import { Meteor } from "meteor/meteor";
-import { check } from "meteor/check";
 import { ChatsCollection } from "./collection";
 
 Meteor.methods({
     async sendChatAsync(content){ 
-        check(content, String)
-        //로그인하지않은 사용자는 채팅할수없음
-        console.log('chat message received', content)
+        if(!this.userId) throw new Meteor.Error('sendChatAsync.unauthorized', 'only logged in user can send chat');
 
-        ChatsCollection.insertAsync({ 
-            content, 
-            createdAt: Date.now(),
+        const document= { 
+            content,
+            createdAt: new Date(),
             createdBy: this.userId
-        }).then((res, err)=>{
-            if(err) console.log(err)
-            console.log(res)
-        })
+        }
+
+        ChatsCollection.schema.validate(document)
+        await ChatsCollection.insertAsync(document)
     }
 })
