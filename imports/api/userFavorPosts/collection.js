@@ -5,9 +5,9 @@ import { PostsCollection } from '../posts/collection';
 import { favorCountDenormalizer } from './denormalizer';
 
 class ExtendedUserFavorPosts extends Mongo.Collection {
-    async upsertAsync(doc, callback){ 
-        const result = await super.upsertAsync(doc, callback)
-        await favorCountDenormalizer.afterUpsertAsyncFavorite(doc.postId)
+    async upsertAsync(userFavorPost, callback){ 
+        const result = await super.upsertAsync(userFavorPost, callback)
+        await favorCountDenormalizer.afterUpsertAsyncFavorite(userFavorPost)
         return result
     }
 }

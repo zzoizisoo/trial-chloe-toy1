@@ -6,8 +6,7 @@ export const favorCountDenormalizer = {
         const favorCount = await UserFavorPosts.find({postId, isFavored: true }).countAsync()
         await PostsCollection.updateAsync({_id: postId}, {$set: {favorCount}})
     },
-
-    async afterUpsertAsyncFavorite(postId){ 
-        await this._updatePost(postId)
+    async afterUpsertAsyncFavorite(userFavorPost){ 
+        await this._updatePost(userFavorPost.postId)
     }
 }
