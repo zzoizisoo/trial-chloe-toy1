@@ -18,6 +18,7 @@ export default ({posts}) => {
                 title={p.title}
                 description={p.description}
                 imageUrl={p.imageUrl}
+                viewCount={p.viewCount}
                 onClick={() => onPostClick(p)}
             />
         )}

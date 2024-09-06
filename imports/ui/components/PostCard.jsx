@@ -1,5 +1,6 @@
 import React from 'react'
 import { AspectRatio, Typography, Card, Grid } from '@mui/joy';
+import { FaEye } from "react-icons/fa";
 
 export default ({
     title,
@@ -29,7 +30,10 @@ export default ({
             <Typography level="title-lg">{title}</Typography>
             <Typography level="body-sm">{description}</Typography>
 
-            {viewCount}
+
+            <div>
+                <FaEye/>{viewCount}
+            </div>
         </Card>
     </Grid>
 )}

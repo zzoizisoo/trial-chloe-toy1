@@ -12,12 +12,15 @@ Meteor.methods({
     return posts;
   },
 
-  async getFavoritePosts(){ 
-    if(!this.userId) throw new Meteor.Error('anauthorized');
-    const userFavoritePosts = await UserFavorPosts.find({userId: this.userId, isFavored: true}).fetchAsync()
-    const postIds = userFavoritePosts.map(item => item.postId)
+  async getFavoritePosts() {
+    if (!this.userId) throw new Meteor.Error("anauthorized");
+    const userFavoritePosts = await UserFavorPosts.find({
+      userId: this.userId,
+      isFavored: true,
+    }).fetchAsync();
+    const postIds = userFavoritePosts.map((item) => item.postId);
     const posts = await PostsCollection.find(
-      {_id: { $in: postIds}},
+      { _id: { $in: postIds } },
       { sort: { createdAt: -1 } } //여기서는 favorite에 추가된 순서대로 줘야하나? 그럴같은데 🤦‍♀️
     ).fetchAsync();
     return posts;
@@ -50,5 +53,20 @@ Meteor.methods({
     //👇 이걸 왜 자동으로 안해줌
     const cleanDoc = PostsCollection.schema.clean(document);
     return await PostsCollection.insertAsync(cleanDoc);
+  },
+
+  async increaseViewCount(postId) {
+    if (!this.userId) throw new Meteor.Error("not authorized");
+
+    const modifier = {
+      $inc: {
+        viewCount: 1,
+      },
+    };
+
+    const validationContext = PostsCollection.schema.newContext();
+    validationContext.validate(modifier, { modifier: true });
+    
+    return PostsCollection.updateAsync({ _id: postId }, modifier);
   },
 });
