@@ -1,7 +1,6 @@
 import {Mongo} from 'meteor/mongo'
 import SimpleSchema from "meteor/aldeed:simple-schema";
 import { check } from "meteor/check";
-import { PostsCollection } from '../posts/collection';
 import { favorCountDenormalizer } from './denormalizer';
 
 class ExtendedUserFavorPosts extends Mongo.Collection {

@@ -3,12 +3,10 @@ import SimpleSchema from "meteor/aldeed:simple-schema";
 import { check } from "meteor/check";
 import { CommentsCountDenormalizer } from './denormalizer';
 
-// export const CommentsCollection = new Mongo.Collection('comments')
-
 class ExtendedCommentsCollection extends Mongo.Collection { 
-    async insertAsync(doc){ 
-        const result = await super.insertAsync(doc)
-        await CommentsCountDenormalizer.afterInsertComment(doc)
+    async insertAsync(comment){ 
+        const result = await super.insertAsync(comment)
+        await CommentsCountDenormalizer.afterInsertComment(comment)
         return result
     }
 }
