@@ -19,6 +19,8 @@ export default ({posts}) => {
                 description={p.description}
                 imageUrl={p.imageUrl}
                 viewCount={p.viewCount}
+                favorCount={p.favorCount}
+                commentsCount={p.commentsCount}
                 onClick={() => onPostClick(p)}
             />
         )}

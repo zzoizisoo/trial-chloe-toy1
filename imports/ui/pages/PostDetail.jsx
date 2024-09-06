@@ -5,8 +5,8 @@ import { PostPanel, CommentsPanel } from '../components';
 export default ({postId}) =>{  
 
     useEffect(()=>{
-        Meteor.callAsync('increaseViewCount', postId)
-    }, [postId])
+        if(Meteor.user()) {Meteor.callAsync('increaseViewCount', postId)}
+    }, [postId, Meteor.user()])
     
     return <Grid container spacing={2}>
         <Grid xs={12} md={6}>
