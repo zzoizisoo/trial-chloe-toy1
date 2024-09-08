@@ -36,23 +36,24 @@ Meteor.methods({
     return post;
   },
 
-  async addPost({ _id, title, description, imageUrl, content }) {
+  async upsertPost(newPost) {
     if (!this.userId)
       throw new Meteor.Error("not authorized", "logged in user can write post");
 
-    const document = {
-      _id: _id || new Mongo.ObjectID()._str, //TODOS: resolve it later. get ID from stub or change logic
-      title,
-      description,
-      imageUrl,
-      content,
-      createdAt: new Date(),
+    const document = newPost._id ? {
+      ...newPost,
+      // updatedAt: new Date(), //이런건 스키마에 없다 
+    }: {
+      ...newPost,
       createdBy: this.userId,
+      createdAt: new Date(),
+      // updatedAt: new Date(), // 아직은 말이지 
     };
-
-    //👇 이걸 왜 자동으로 안해줌
+    
+    // upsert schema validation 졸라 골때리네....
+    // //👇 이걸 왜 자동으로 안해줌... 걍 넣을게!!!!!!!!!
     const cleanDoc = PostsCollection.schema.clean(document);
-    return await PostsCollection.insertAsync(cleanDoc);
+    return await PostsCollection.upsertAsync({_id: newPost._id}, { $set: document })
   },
 
   async increaseViewCount(postId) {

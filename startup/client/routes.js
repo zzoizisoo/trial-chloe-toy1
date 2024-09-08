@@ -2,7 +2,7 @@ import React from 'react'
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { mount } from 'react-mounter';
 import { MainLayout } from '../../imports/ui/layouts/MainLayout';
-import { SignUp, Login, Favorite, Main, PostWrite, Profile, Post} from '../../imports/ui/pages'
+import { SignUp, Login, Favorite, Main, PostForm, Profile, Post} from '../../imports/ui/pages'
 
 // TODO
 // add undefined router ㅋㅋ
@@ -55,7 +55,16 @@ loggedIn.route('/post-write', {
     name: 'post-write',
     action(){ 
         mount(MainLayout, {
-            content: <PostWrite/> 
+            content: <PostForm/> 
+        })
+    }
+})
+
+loggedIn.route('/post/:pid/edit', { 
+    name: 'post-edit',
+    action({pid}){ 
+        mount(MainLayout, {
+            content: <PostForm postId={pid}/> 
         })
     }
 })

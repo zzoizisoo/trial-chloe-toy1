@@ -19,9 +19,6 @@ export default () => {
   //setPassword 옵션에 logOut: true 하면 헬게이트 오픈🎉
   if (!user) return <></>;
 
-  let newProfile = {};
-  let newPassword = "";
-
   const defaultProfile = {
     "profile.name": user.profile.name,
     "profile.phoneNumber": user.profile.phoneNumber,
@@ -33,9 +30,12 @@ export default () => {
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
 
+    let newProfile = {};
+    let newPassword = "";
+
     // PROFILE
-    Object.entries(defaultProfile).forEach(([key, value]) => {
-      if (value === "") return;
+    Object.entries(defaultProfile).forEach(([key]) => {
+      if (!formJson[key]) return;
       if (formJson[key] === defaultProfile[key]) return;
       newProfile[key] = formJson[key];
     });
@@ -68,7 +68,6 @@ export default () => {
       case "profile.profileImgUrl":
         setNewProfileImg(target.files[0]);
       default:
-        console.log(target);
         break;
     }
   };

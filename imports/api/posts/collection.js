@@ -5,12 +5,17 @@ import { check } from "meteor/check";
 export const PostsCollection = new Mongo.Collection('posts')
 
 PostsCollection.schema = new SimpleSchema({
-    _id: String, //TODO LATER...? 
     title: String,
     description: String,
     content: String,
-    createdBy: String,
-    createdAt: Date,
+    createdBy: {
+        type: String,
+        defaultValue: this.userId //TODO: check
+    },
+    createdAt: {
+        type: Date,
+        defaultValue: new Date()
+    },
     imageUrl: {
         type: String,
         optional: true
