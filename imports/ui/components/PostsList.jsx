@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Grid from '@mui/joy/Grid';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { PostCard } from '../components';
