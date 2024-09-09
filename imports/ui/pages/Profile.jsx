@@ -63,25 +63,30 @@ export default () => {
     setIsSubmitLoading(false);
   };
 
-  const handleFormChange = ({ target }) => {
-    switch (target.name) {
-      case "profile.profileImgUrl":
-        setNewProfileImg(target.files[0]);
-      default:
-        break;
-    }
-  };
+  // const handleFormChange = ({ target }) => {
+  //   switch (target.name) {
+  //     case "profile.profileImgUrl":
+  
+  //     default:
+  //       break;
+  //   }
+  // };
+
+  const handleImageChange = ({target}) =>{ 
+    setNewProfileImg(target.files[0]);
+  }
 
   const logout = () => {
     Meteor.logout();
     FlowRouter.go("/");
   };
 
+  
   return (
     <>
       <h1>Profile</h1>
 
-      <form onSubmit={handleSubmit} onChange={handleFormChange}>
+      <form onSubmit={handleSubmit} >
         <label>
           <ProfileImg
             src={
@@ -91,8 +96,7 @@ export default () => {
             }
             size={100}
           />
-          {/* 인풋은 파일인데 서버에는 url 로 넘겨야함... 🤔 */}
-          <input name="profile.profileImgUrl" type="file" accept="image/*" />
+          <input type="file" accept="image/*" onChange={handleImageChange}/>
         </label>
 
         <hr />
@@ -100,7 +104,6 @@ export default () => {
         <label>
           Email:
           <input
-            name="profile.email[0]"
             type="text"
             defaultValue={user.emails[0].address}
             disabled

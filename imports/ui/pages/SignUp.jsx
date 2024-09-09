@@ -1,89 +1,111 @@
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import { Button } from "@mui/joy";
+import { ProfileImg } from "../components";
+import { v4 as uuidv4 } from "uuid";
+import { UploadObject } from "../../../s3";
 
-export default () => { 
-    const [signUpInfo, setSignUpInfo] = useState({
-        email:'',
-        name:'',
-        password:'',
-        passwordConfirm:'',
-        phoneNumber:'',
-        profileImgUrl:'',
+export default () => {
+  const [newProfileImg, setNewProfileImg] = useState(null);
+
+  const handleImageChange = (e) => {
+    setNewProfileImg(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const formJson = Object.fromEntries(formData.entries());
+
+    if (formJson.password !== formJson.passwordConfirm) {
+      console.error("password is not matching");
+      return;
+    }
+    delete formJson.passwordConfirm;
+
+    const newUser = { profile: {} };
+    Object.entries(formJson).forEach(([key, value]) => {
+      if (key === "name" || key === "phoneNumber") {
+        newUser.profile[key] = value;
+      } else {
+        newUser[key] = value;
+      }
+    });
+
+    if (newProfileImg) {
+      try {
+        const fileId = uuidv4();
+        const url = await UploadObject(
+          `userProfileImg/${fileId}.png`,
+          newProfileImg
+        );
+        // formJson['profile.profileImgUrl'] = url
+        newUser.profile.profileImgUrl = url;
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    
+    Accounts.createUser(newUser, error => {
+        if(error) console.error(error)
+        else FlowRouter.go('/')
     })
-
-    const handleChange = (e) =>{ 
-        const {name, value} = e.target;
-        setSignUpInfo({...signUpInfo, [name]: value})
-    }
+  };
 
 
-    const handleSubmit = () =>{ 
-        // validate if all required fields are filled -> Form의 기본 제공 기능을 쓰고싶은데! 
-       if(!isFormValid){ 
-            console.error('form is not valid')
-       } else { 
-            const {email, name, password, phoneNumber, profileImgUrl} = signUpInfo
-            Accounts.createUser({
-                email,
-                password,
-                profile:{ 
-                    name,
-                    profileImgUrl,
-                    phoneNumber
-                }
-            },(err)=>{ 
-                if(err) console.error(err);
-                else FlowRouter.go('/')
-            })
-       }
-    }
+  return (
+    <>
+      <h1> SignUp Page</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Profile Image
+          <ProfileImg
+            src={newProfileImg ? URL.createObjectURL(newProfileImg) : ""}
+          />
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+        </label>
 
-    const isRequiredFilled = signUpInfo.email && signUpInfo.name && signUpInfo.password && signUpInfo.passwordConfirm ? true:false
+        <hr />
 
-    const isFormValid = () => { 
-        if(!isRequiredFilled){ 
-            console.error('Required field is not filled');
-            return false;
-        } else if(signUpInfo.password !== signUpInfo.passwordConfirm) { 
-            console.error('passwords are not matched')
-            return false;
-        } else return true;
-    }; 
-    
-    
-    return <>
-        <h1> SignUp Page</h1>
-        <form> 
-            <div>
-                Image Uploader Area
-            </div>
+        <label>
+          * Email
+          <input name="email" type="text" required />
+        </label>
 
-            <div>
-                <label htmlFor="email">* Email</label>
-                <input name="email" type="text" value={signUpInfo.email} onChange={handleChange} required/>
-            </div>
-            <div>
-                <label htmlFor="name">* Name</label>
-                <input name="name" type="text" value={signUpInfo.name} onChange={handleChange} required/>
-            </div>
-            <div>
-                <label htmlFor="password">* Password</label>
-                <input name="password" type="password" value={signUpInfo.password} onChange={handleChange} required/>
-            </div>
-            <div>
-                <label htmlFor="passwordConfirm">* Password Confirm</label>
-                <input name="passwordConfirm" type="password" value={signUpInfo.passwordConfirm} onChange={handleChange} required/>
-            </div>
-            <div>
-                <label htmlFor="phoneNumber">Phone Number</label>
-                <input name="phoneNumber" type="tel" value={signUpInfo.phoneNumber} onChange={handleChange}/>
-            </div>
+        <hr />
 
-            <Button onClick={() => FlowRouter.go('/')}> Cancel </Button>
-            <Button onClick={handleSubmit} disabled={!isRequiredFilled}> OK </Button>
-            <p>ok 버튼 누르기 말고 엔터도 submit 하고싶지만 일단 다음으로~~</p>
-        </form>
+        <label>
+          * Name
+          <input name="name" type="text" required />
+        </label>
+
+        <hr />
+
+        <label>
+          * Password
+          <input name="password" type="password" required />
+        </label>
+
+        <hr />
+
+        <label>
+          * Password Confirm
+          <input name="passwordConfirm" type="password" required />
+        </label>
+
+        <hr />
+
+        <label>
+          Phone Number
+          <input name="phoneNumber" type="tel" />
+        </label>
+
+        <hr />
+        <Button onClick={() => FlowRouter.go("/")}> Cancel </Button>
+        <Button type="submit"> OK </Button>
+      </form>
     </>
-}
+  );
+};
