@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSubscribe, useFind, useTracker } from 'meteor/react-meteor-data';
 import { CommentsCollection } from '../../../api/comments/collection';
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import CommentInput from './CommentInput'
 import CommentItem from './CommentItem';

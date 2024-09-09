@@ -1,5 +1,6 @@
 import { Button } from "@mui/joy";
 import React, { useState } from "react";
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 export default () => {
   const postId = FlowRouter.getParam("pid");

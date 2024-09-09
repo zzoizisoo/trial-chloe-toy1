@@ -3,6 +3,7 @@
 import React from 'react';
 import { useSubscribe, useFind, useTracker } from 'meteor/react-meteor-data'
 import { IoIosHeart, IoIosHeartEmpty } from "react-icons/io";
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 import { Button } from "@mui/joy";
 
