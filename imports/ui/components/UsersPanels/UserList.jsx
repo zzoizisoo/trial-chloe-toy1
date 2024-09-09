@@ -21,6 +21,11 @@ export default ({
                 $regex: searchInput,
                 $options: 'i'
             }
+        },{
+            sort: {
+                "status.online": -1,
+                "status.lastLogin.date": -1,
+              },
         }).fetch()
         , [searchInput]
     )
@@ -54,5 +59,7 @@ const UserListItem = ({ user, handleSelectUser }) => {
         <ProfileImg src={user.profile?.profileImgUrl}/>
         
         {user.profile?.name}
+        {user.status?.online ? " Live" : user.status?.lastLogin?.date.toLocaleString()}
+
     </div>
 }
