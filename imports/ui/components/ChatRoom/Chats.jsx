@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTracker, useSubscribe } from "meteor/react-meteor-data";
 import MyChatItem from "./MyChatItem";
 import OtherChatItem from "./OtherChatItem";
 import { ChatsCollection } from "../../../api/chats/collection";
+import { throttle } from "../../utils";
+
 
 export default function ChatRoom() {
   const user = useTracker(() => Meteor.user());
-  const PAGINATION_SIZE = 10;
+  const PAGINATION_SIZE = 20;
   const [pageLength, setPageLength] = useState(PAGINATION_SIZE);
 
   // CHATS
@@ -37,6 +39,15 @@ export default function ChatRoom() {
       .fetch();
   });
 
+
+  const onScroll = throttle(({target:{clientHeight, scrollHeight, scrollTop}}) => { 
+    const PAGING_THRESHHOLD = 100;
+    if(!isChatLoading() && Math.abs(scrollTop) + clientHeight + PAGING_THRESHHOLD > scrollHeight){
+        setPageLength(pageLength + PAGINATION_SIZE)
+    }
+  }, 1000)
+
+
   const chatsWithProfileImg = chats.map((chat) => {
     const imgUrl = users.find((user) => user._id === chat.createdBy)?.profile
       ?.profileImgUrl;
@@ -50,6 +61,7 @@ export default function ChatRoom() {
         flexDirection: "column-reverse",
         overflow: "auto",
       }}
+      onScroll={onScroll}
     >
       {chatsWithProfileImg &&
         chatsWithProfileImg.map((chat) =>
@@ -67,9 +79,7 @@ export default function ChatRoom() {
             />
           )
         )}
-      <button onClick={() => setPageLength(pageLength + PAGINATION_SIZE)}>
-        Load more
-      </button>
+
     </div>
   );
 };

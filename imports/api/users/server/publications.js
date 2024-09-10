@@ -1,6 +1,6 @@
 import { Meteor } from "meteor/meteor";
 
-Meteor.publish("usersProfiles", function (searchInput) {
+Meteor.publish("usersProfiles", function (searchInput, limit) {
   const MAX_LIMIT = 500;
   return Meteor.users.find(
     searchInput
@@ -23,7 +23,7 @@ Meteor.publish("usersProfiles", function (searchInput) {
         "status.lastLogin.date": -1,
         _id: 1,
       },
-      limit: MAX_LIMIT,
+      limit: Math.min(limit, MAX_LIMIT),
     }
   );
 });

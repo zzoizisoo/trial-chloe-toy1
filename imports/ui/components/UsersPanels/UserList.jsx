@@ -4,15 +4,20 @@ import React, { useState } from "react";
 import Input from "@mui/joy/Input";
 import { IoSearch } from "react-icons/io5";
 import ProfileImg from "../ProfileImg";
+import { throttle } from "../../utils";
 
 export default function UserList({ handleSelectUser }) {
   const [searchInput, setSearchInput] = useState("");
-  const usersProfilesLoading = useSubscribe("usersProfiles", searchInput);
+  const PAGINATION_SIZE = 20;
+  const [pageLength, setPageLength] = useState(PAGINATION_SIZE);
+  const usersProfilesLoading = useSubscribe(
+    "usersProfiles",
+    searchInput,
+    pageLength
+  );
 
   const users = useTracker(
     () =>
-      //TODO: debounce
-      //TODO: limit, skip
       Meteor.users
         .find(
           {
@@ -26,20 +31,35 @@ export default function UserList({ handleSelectUser }) {
               "status.online": -1,
               "status.lastLogin.date": -1,
             },
+            limit: pageLength,
           }
         )
         .fetch(),
-    [searchInput]
+    [searchInput, pageLength]
   );
 
   const onInputChange = (e) => {
     setSearchInput(e.target.value);
   };
 
+  const onScroll = throttle(
+    ({ target: { clientHeight, scrollHeight, scrollTop } }) => {
+      const PAGING_THRESHHOLD = 100;
+      if (
+        !usersProfilesLoading() &&
+        Math.abs(scrollTop) + clientHeight + PAGING_THRESHHOLD > scrollHeight
+      ) {
+        setPageLength(pageLength + PAGINATION_SIZE);
+      }
+    },
+    1000
+  );
+
   return (
     <div style={{ flex: "1.5", display: "flex", flexDirection: "column" }}>
       <SearchBar searchInput={searchInput} onInputChange={onInputChange} />
       <div
+        onScroll={onScroll}
         style={{ display: "flex", flexDirection: "column", overflow: "auto" }}
       >
         {/* Bypassing props */}
