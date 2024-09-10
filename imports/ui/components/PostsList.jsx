@@ -10,6 +10,7 @@ export default function PostList({ dataSource }) {
   const posts = usePagination(dataSource, pageStart, PAGINATION_COUNT);
 
   const loadMorePosts = () => {
+    // 다음 페이지를 불러올 때 doc의 추가가 있는 경우 중첩 데이터가 중복으로 오는 문제가 있다.
     setPageStart(pageStart + PAGINATION_COUNT);
   };
 
