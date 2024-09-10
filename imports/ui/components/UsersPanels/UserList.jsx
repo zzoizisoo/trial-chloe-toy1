@@ -6,9 +6,9 @@ import { IoSearch } from "react-icons/io5";
 import ProfileImg from '../ProfileImg';
 
 
-export default ({
+export default function UserList({
     handleSelectUser
-}) => {
+}) {
     const usersProfilesReady = useSubscribe('usersProfiles')
     const [searchInput, setSearchInput] = useState('')
 

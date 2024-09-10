@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import { useState, useEffect } from 'react';
 
 export default useFetch = (methodName, ...args) =>{
@@ -13,6 +14,5 @@ export default useFetch = (methodName, ...args) =>{
             ignore = true;
           };
     }, [methodName, ...args])
-
     return result;
 }

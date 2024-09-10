@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import PostsList from "../components/PostsList";
-import { useFetch } from "../hooks";
+import { useFetch, usePagination } from "../hooks";
 
-export default () => { 
-    const posts = useFetch('getFavoritePosts')
-    return <>
-        <h1>Favorite</h1>
-        <PostsList posts={posts} />
+export default function FavoritePage () {
+ 
+  return (
+    <>
+      <h1>Favorite</h1>
+      <PostsList dataSource='getFavoritePosts'/>
     </>
-}
+  );
+};

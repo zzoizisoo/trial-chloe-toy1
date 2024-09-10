@@ -2,18 +2,26 @@ import React from "react";
 import { AspectRatio, Typography, Card, Grid } from "@mui/joy";
 import { FaEye, FaCommentAlt } from "react-icons/fa";
 import { IoIosHeart } from "react-icons/io";
+import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 
-export default ({
-  title,
-  description,
-  imageUrl,
-  favorCount,
-  commentsCount,
-  viewCount,
-  onClick,
-}) => {
+export default ({post}) => {
+  const {
+    _id,
+    title,
+    description,
+    imageUrl,
+    favorCount,
+    commentsCount,
+    viewCount,
+  } = post
+
+  const onPostClick = () => {
+    if (!Meteor.user()) return;
+    FlowRouter.go(`/post/${_id}`);
+  }
+
   return (
-    <Grid xs={5} md={1} onClick={onClick}>
+    <Grid xs={5} md={1} onClick={onPostClick}>
       <Card orientation="vertical" size="sm" variant="soft">
         <img
           src={imageUrl}
@@ -39,6 +47,8 @@ export default ({
             <span>{viewCount || 0}</span>
           </div>
         </div>
+        <>{post._id}</>
+        <>{Date.parse(post.createdAt)}</>
       </Card>
     </Grid>
   );

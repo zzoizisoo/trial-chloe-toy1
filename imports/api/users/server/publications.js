@@ -14,7 +14,7 @@ Meteor.publish("usersProfiles", function () {
         "status.online": -1,
         "status.lastLogin.date": -1,
       },
-      limit: 1000,
+      // limit: 1000,
     }
   );
 });
