@@ -1,8 +1,16 @@
 import { Meteor } from "meteor/meteor";
 
-Meteor.publish("usersProfiles", function () {
+Meteor.publish("usersProfiles", function (searchInput) {
+  const MAX_LIMIT = 500;
   return Meteor.users.find(
-    {},
+    searchInput
+      ? {
+          "profile.name": {
+            $regex: searchInput,
+            $options: "i",
+          },
+        }
+      : {},
     {
       fields: {
         profile: 1,
@@ -13,8 +21,9 @@ Meteor.publish("usersProfiles", function () {
       sort: {
         "status.online": -1,
         "status.lastLogin.date": -1,
+        _id: 1,
       },
-      // limit: 1000,
+      limit: MAX_LIMIT,
     }
   );
 });
