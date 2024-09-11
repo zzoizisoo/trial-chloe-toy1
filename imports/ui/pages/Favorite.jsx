@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import PostsList from "../components/PostsList";
-import { useFetch, usePagination } from "../hooks";
 
 export default function FavoritePage () {
  

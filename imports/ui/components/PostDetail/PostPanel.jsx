@@ -4,12 +4,12 @@ import { Button } from "@mui/joy";
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import ProfileImg from "../ProfileImg";
 import FavoriteButton from "./FavoriteButton";
-import { useFetch } from "../../hooks";
+import { useMethod } from "../../hooks";
 
 export default () => {
   const postId = FlowRouter.getParam("pid");
-  const post = useFetch("getPost", postId);
-  const author = useFetch("getUserInfo", post?.createdBy);
+  const post = useMethod("getPost", postId);
+  const author = useMethod("getUserInfo", post?.createdBy);
 
   return (
     <div style={{ position: "relative" }}>

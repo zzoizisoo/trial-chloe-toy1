@@ -1,7 +1,8 @@
 import { Meteor } from "meteor/meteor";
 import { useState, useEffect } from "react";
 
-export default usePagination = (methodName, from, count) => { 
+// 네이밍 별로임...
+export default useMethodPagination = (methodName, from, count) => { 
     const [result, setResult] = useState([]);
 
     useEffect(()=>{

@@ -1,3 +1,3 @@
-import useFetch from "./useFetch";
-import usePagination from "./usePagination";
-export {useFetch, usePagination}
+import useMethod from "./useMethod";
+import useMethodPagination from "./useMethodPagination";
+export {useMethod, useMethodPagination}

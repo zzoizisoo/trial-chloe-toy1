@@ -1,7 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { useState, useEffect } from 'react';
 
-export default useFetch = (methodName, ...args) =>{
+export default useMethod = (methodName, ...args) =>{
     const [result, setResult] = useState(null);
     useEffect(()=>{
         let ignore = false;

@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import { UploadObject } from "../../../s3";
 import { v4 as uuidv4 } from "uuid";
-import { useFetch } from "../hooks";
+import { useMethod } from "../hooks";
 
 export default ({ postId }) => {
   // if no postId -> creating new post
   // else -> editing post
   // onsubmit -> upsert post
-  const post = useFetch("getPost", postId);
+  const post = useMethod("getPost", postId);
   const [newImage, setNewImage] = useState(undefined);
 
   const defaultValues = post
