@@ -1,39 +1,74 @@
-import React from 'react';
-import { useTracker } from 'meteor/react-meteor-data';
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+import React from "react";
+import { useTracker } from "meteor/react-meteor-data";
+import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 
-import Button from '@mui/joy/Button';
-import ProfileImg from './ProfileImg';
+import { Box, Button, Typography } from "@mui/joy";
+import { AppBar, Toolbar } from "@mui/material";
 
+import ProfileImg from "./ProfileImg";
 
-export default ()=>{ 
-    const user = useTracker(() => Meteor.user());
+export default () => {
+  const user = useTracker(() => Meteor.user());
 
-    return (
-        <div className='header'>
+  return (
+    <AppBar position="static" sx={{mb: 3}}>
+      <Toolbar>
+        {user && (
+          <div>
+            <Button
+              variant="outlined"
+              sx={{ color: "white" }}
+              onClick={() => FlowRouter.go("post-write")}
+            >
+              Blog Write
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{ color: "white", ml: 1 }}
+              onClick={() => FlowRouter.go(`/favorite/${user._id}`)}
+            >
+              Favorite
+            </Button>
+          </div>
+        )}
 
-            {user && 
-            <div>
-                <Button onClick={()=>FlowRouter.go('post-write')}>Blog Write</Button>
-                <Button onClick={()=>FlowRouter.go(`/favorite/${user._id}`)}>Favorite</Button>
-            </div>}
+        <Typography
+          level="h1"
+          sx={{ flexGrow: 1, textAlign: "center", color: "white" }}
+          onClick={() => FlowRouter.go("index")}
+        >
+          [Chloe] Toy Project
+        </Typography>
 
-
-            <h1 onClick={()=>FlowRouter.go('index')}>
-                [Chloe] Toy Project
-            </h1>
-
-            <div>
-                {user 
-                    ? <div className='flex' onClick={()=>FlowRouter.go(`/profile/${user._id}`)}>  
-                        <div>{user.profile?.name}</div>
-                        <ProfileImg src={user.profile?.profileImgUrl} size={40}/> 
-                     </div> 
-                    : <>
-                        <Button onClick={()=>FlowRouter.go('login')}>LOG IN</Button>
-                        <Button onClick={()=>FlowRouter.go('signup')}>SIGN UP</Button>
-                      </>}
-            </div>
+        <div>
+          {user ? (
+            <Box
+              sx={{display: 'flex'}}
+              onClick={() => FlowRouter.go(`/profile/${user._id}`)}
+            >
+              <Typography sx={{alignSelf: 'center', mr: 1}} color="inherit">{user.profile?.name}</Typography>
+              <ProfileImg src={user.profile?.profileImgUrl} size={40} />
+            </Box>
+          ) : (
+            <>
+              <Button
+                variant="outlined"
+                sx={{ color: "white" }}
+                onClick={() => FlowRouter.go("login")}
+              >
+                LOG IN
+              </Button>
+              <Button
+                variant="outlined"
+                sx={{ color: "white", ml: 1 }}
+                onClick={() => FlowRouter.go("signup")}
+              >
+                SIGN UP
+              </Button>
+            </>
+          )}
         </div>
-    )
-}
+      </Toolbar>
+    </AppBar>
+  );
+};

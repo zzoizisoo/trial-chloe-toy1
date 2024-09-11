@@ -15,7 +15,7 @@ export default function PostList({ dataSource }) {
 
   return (
     <div>
-      <Grid container columns={5}>
+      <Grid container columns={5} spacing={1}>
         {posts && posts.map((p) => <PostCard key={p._id} post={p} />)}
       </Grid>
 
