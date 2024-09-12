@@ -1,16 +1,23 @@
-import { Meteor } from "meteor/meteor";
 import React, { useState } from "react";
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
-import { Button } from "@mui/joy";
-import { ProfileImg } from "../components";
+import { Button, Typography, Input, useTheme } from "@mui/joy";
+import { FlexBox, InputProfileImg, InputProfileInfo } from "../components";
 import { v4 as uuidv4 } from "uuid";
 import { UploadObject } from "../../../s3";
+import { FaPhone } from "react-icons/fa6";
+import { AiFillMail } from "react-icons/ai";
+import { FaUser } from "react-icons/fa";
+import { MdLock } from "react-icons/md";
 
 export default () => {
   const [newProfileImg, setNewProfileImg] = useState(null);
-
+  const theme = useTheme();
   const handleImageChange = (e) => {
     setNewProfileImg(e.target.files[0]);
+  };
+
+  const handleFormChange = (e) => {
+    console.log(e.target.name, e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -47,64 +54,78 @@ export default () => {
         console.error(e);
       }
     }
-    
-    Accounts.createUser(newUser, error => {
-        if(error) console.error(error)
-        else FlowRouter.go('/')
-    })
+
+    Accounts.createUser(newUser, (error) => {
+      if (error) console.error(error);
+      else FlowRouter.go("/");
+    });
   };
 
-
   return (
-    <>
-      <h1> SignUp Page</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Profile Image
-          <ProfileImg
-            src={newProfileImg ? URL.createObjectURL(newProfileImg) : ""}
-          />
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-        </label>
+   <>
+      <Typography level="h2" textAlign="center" mb={4} mt={6} fontSize="1.5rem">
+        Sign Up
+      </Typography>
 
-        <hr />
+      <form onSubmit={handleSubmit} onChange={handleFormChange}>
+        <InputProfileImg 
+          image={newProfileImg}
+          handleImageChange={handleImageChange}
+        />
 
-        <label>
-          * Email
-          <input name="email" type="text" required />
-        </label>
+        <InputProfileInfo
+          formDisplayLabel="* Email"
+          name="email"
+          type="text"
+          icon={<AiFillMail color={theme.palette.primary[500]} />}
+          // error="something is so wrong"
+          required
+        />
 
-        <hr />
+        <InputProfileInfo
+          formDisplayLabel="* Name"
+          name="name"
+          type="text"
+          icon={<FaUser color={theme.palette.primary[500]} />}
+          required
+        />
 
-        <label>
-          * Name
-          <input name="name" type="text" required />
-        </label>
+        <InputProfileInfo
+          formDisplayLabel="* Password"
+          name="password"
+          type="password"
+          icon={<MdLock color={theme.palette.primary[500]} />}
+          required
+        />
 
-        <hr />
+        <InputProfileInfo
+          formDisplayLabel="* Password Confirm"
+          name="passwordConfirm"
+          type="password"
+          icon={<MdLock color={theme.palette.primary[500]} />}
+          required
+        />
 
-        <label>
-          * Password
-          <input name="password" type="password" required />
-        </label>
+        <InputProfileInfo
+          formDisplayLabel="Phone Number"
+          name="phoneNumber"
+          type="tel"
+          icon={<FaPhone color={theme.palette.primary[500]} />}
+        />
 
-        <hr />
-
-        <label>
-          * Password Confirm
-          <input name="passwordConfirm" type="password" required />
-        </label>
-
-        <hr />
-
-        <label>
-          Phone Number
-          <input name="phoneNumber" type="tel" />
-        </label>
-
-        <hr />
-        <Button onClick={() => FlowRouter.go("/")}> Cancel </Button>
-        <Button type="submit"> OK </Button>
+        <FlexBox justify="center" style={{ marginTop: 50 }}>
+          <Button
+            sx={{ width: "6rem", mr: 1 }}
+            variant="outlined"
+            onClick={() => FlowRouter.go("/")}
+          >
+            Cancel
+          </Button>
+          <Button sx={{ width: "6rem", mr: 1 }} type="submit">
+            {" "}
+            OK{" "}
+          </Button>
+        </FlexBox>
       </form>
     </>
   );

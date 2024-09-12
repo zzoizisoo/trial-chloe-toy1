@@ -1,56 +1,65 @@
-import { Meteor } from 'meteor/meteor';
-import React, {useState} from "react";
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
-import { Button } from "@mui/joy";
+import { Meteor } from "meteor/meteor";
+import React, { useState } from "react";
+import { FlowRouter } from "meteor/ostrio:flow-router-extra";
+import { Button, Typography, useTheme } from "@mui/joy";
+import { FlexBox, InputProfileInfo } from "../components";
+import { FaUser } from "react-icons/fa";
+import { MdLock } from "react-icons/md";
 
+export default () => {
+  const theme = useTheme();
 
-export default () => { 
-    const [loginInfo, setLoginInfo] = useState({username: '', password:''})
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    const formJson = Object.fromEntries(formData.entries());
 
-    const handleChange = (e) =>{ 
-        const {name, value} = e.target
-        setLoginInfo({ ...loginInfo, [name]: value})
-    }
+    Meteor.loginWithPassword(formJson.username, formJson.password, (err) => {
+      if (err) console.error(err);
+      else FlowRouter.go("/");
+    });
+  };
 
-    const handleSubmit = () =>{ 
-        Meteor.loginWithPassword(
-            loginInfo.username, 
-            loginInfo.password,
-            (err) => { 
-                if(err)console.error(err)
-                else FlowRouter.go('/')
-            })
-    }
+  return (
+    <>
+      <Typography level="h2" textAlign="center" mb={4} mt={6} fontSize="1.5rem">
+        Log In
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <InputProfileInfo
+          formDisplayLabel="Name or Email"
+          name="username"
+          type="text"
+          icon={<FaUser color={theme.palette.primary[500]} />}
+          required
+        />
 
-    return <>
-        <h1>Login</h1>
+        <InputProfileInfo
+          formDisplayLabel="Password"
+          name="password"
+          type="password"
+          icon={<MdLock color={theme.palette.primary[500]} />}
+          required
+        />
 
-        <form>
-            <div>
-                <label htmlFor="username">Email</label>
-                <input 
-                    value={loginInfo.username} //이거 빼먹었었는데 왜 됨? 
-                    name="username" 
-                    type="text" 
-                    onChange={handleChange}
-                    required 
-                />
-            </div>
-
-            <div>
-                <label htmlFor="password">Password</label>
-                <input
-                    value={loginInfo.password} //이거 빼먹었었는데 왜 됨? 
-                    name="password" 
-                    type="password" 
-                    onChange={handleChange}
-                    required 
-                /> 
-            </div>
-
-            <Button onClick={() => FlowRouter.go('/')}> Cancel </Button>
-            <Button onClick={handleSubmit} disabled={!loginInfo.username || !loginInfo.password}> OK </Button>
-            <p>ok 버튼 누르기 말고 엔터도 submit 하고싶지만 일단 다음으로~~</p>
-        </form>
+        <FlexBox justify="center" style={{ marginTop: 50 }}>
+          <Button
+            sx={{ width: "6rem", mr: 1 }}
+            variant="outlined"
+            onClick={() => FlowRouter.go("/")}
+          >
+            Cancel
+          </Button>
+          <Button
+            sx={{ width: "6rem", mr: 1 }}
+            type="submit"
+            // disabled={!loginInfo.username || !loginInfo.password}
+          >
+            OK
+          </Button>
+        </FlexBox>
+      </form>
     </>
-}
+  );
+};

@@ -2,7 +2,7 @@ import React from "react";
 import { Header } from "../components";
 import { useTheme } from "@mui/joy";
 
-export const PostsDetailLayout = ({ content }) => {
+export const PostDetailLayout = ({ content }) => {
   const theme = useTheme();
   return (
     <>

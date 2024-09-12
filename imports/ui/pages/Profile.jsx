@@ -1,10 +1,12 @@
-import { Button } from "@mui/joy";
+
 import React, { useState } from "react";
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import { UploadObject } from "../../../s3";
 import { useTracker } from "meteor/react-meteor-data";
 import { ProfileImg } from "../components";
+import { Button, Typography } from "@mui/joy";
 import { v4 as uuidv4 } from "uuid";
+
 
 // TODO: 
 // delete profile image
@@ -84,7 +86,9 @@ export default () => {
   
   return (
     <>
-      <h1>Profile</h1>
+      <Typography level="h2" textAlign="center" mb={4} mt={6} fontSize="1.5rem">
+        Log In
+      </Typography>
 
       <form onSubmit={handleSubmit} >
         <label>

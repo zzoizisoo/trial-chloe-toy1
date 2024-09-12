@@ -15,11 +15,17 @@ export default ({ dataSource }) => {
 
   return (
     <div>
-      <Grid container columns={5} spacing={1}>
+      <Grid container columns={5} spacing={2}>
         {posts && posts.map((p) => <PostCard key={p._id} post={p} />)}
       </Grid>
 
-      <Button onClick={loadMorePosts}>Load More</Button>
+    {/* TODO?  */}
+    {/* 전체 다 불러왔음 사실 없어도 되긴함 */}
+      <Button onClick={loadMorePosts} 
+      variant="plain"
+      sx={{ display: "block", mx: "auto", my:4}}>
+        Load More
+      </Button>
     </div>
   );
-}
+};

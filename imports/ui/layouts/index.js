@@ -1,4 +1,4 @@
-import { PostsDetailLayout } from "./PostsDetailLayout";
+import { PostDetailLayout } from "./PostsDetailLayout";
 import { MainLayout } from "./MainLayout";
-
-export {PostsDetailLayout, MainLayout}
+import { SignUpLayout } from "./SignUpLayout";
+export {PostDetailLayout, MainLayout, SignUpLayout}
