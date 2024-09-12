@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { mount } from 'react-mounter';
-import { MainLayout } from '../../imports/ui/layouts/MainLayout';
+import { MainLayout, PostsDetailLayout } from '../../imports/ui/layouts';
 import { SignUp, Login, Favorite, Main, PostForm, Profile, Post} from '../../imports/ui/pages'
 
 // TODO
@@ -92,7 +92,7 @@ loggedIn.route('/profile/:uid', {
 loggedIn.route('/post/:pid', { 
     name: 'post',
     action({pid}){ 
-        mount(MainLayout, {
+        mount(PostsDetailLayout, {
             content: <Post postId={pid}/>
         })
     }

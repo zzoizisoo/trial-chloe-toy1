@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Grid, Button } from "@mui/joy";
-import { PostCard } from "../components";
+import { PostCard } from ".";
 import { useMethodPagination } from "../hooks";
 
-export default function PostList({ dataSource }) {
+export default ({ dataSource }) => {
   const PAGINATION_COUNT = 100;
   const [pageStart, setPageStart] = useState(0);
   const posts = useMethodPagination(dataSource, pageStart, PAGINATION_COUNT);

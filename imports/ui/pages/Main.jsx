@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { UsersPanels, ChatRoom } from "../components";
-import PostsList from "../components/PostsList";
-import { Box, Grid } from "@mui/joy";
+import React from "react";
+import { UsersPanels, ChatRoom, FlexBox } from "../components";
+import { PostList } from "../components";
 
 export default function Main() {
   return (
     <>
-      <div style={{display: "flex", height: 380}}>
+      <FlexBox style={{height: 340, gap: 10, marginBottom: 20}}>
           <UsersPanels />
           <ChatRoom />
-      </div>
-      <PostsList dataSource="getPosts" />
+      </FlexBox>
+      <PostList dataSource="getPosts" />
     </>
   );
 }

@@ -1,10 +1,18 @@
 import React from "react";
-import { AspectRatio, Typography, Card, Grid } from "@mui/joy";
+import {
+  AspectRatio,
+  Typography,
+  Card,
+  Grid,
+  CardOverflow,
+  CardContent,
+} from "@mui/joy";
 import { FaEye, FaCommentAlt } from "react-icons/fa";
 import { IoIosHeart } from "react-icons/io";
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
+import FlexBox from "./FlexBox";
 
-export default ({post}) => {
+export default ({ post }) => {
   const {
     _id,
     title,
@@ -13,42 +21,66 @@ export default ({post}) => {
     favorCount,
     commentsCount,
     viewCount,
-  } = post
+  } = post;
 
   const onPostClick = () => {
     if (!Meteor.user()) return;
     FlowRouter.go(`/post/${_id}`);
-  }
+  };
 
   return (
-    <Grid xs={5} md={1} onClick={onPostClick}>
-      <Card orientation="vertical" size="sm" variant="soft">
-        <img
-          src={imageUrl}
-          //??? srcSet="https://images.unsplash.com/photo-1527549993586-dff825b37782?auto=format&fit=crop&w=286&dpr=2 2x"
-          loading="lazy"
-          alt=""
-        />
+    <Grid xs={5} sm={2.5} md={1} onClick={onPostClick}>
+      <Card
+        orientation="vertical"
+        size="sm"
+        variant="soft"
+        sx={{ height: 230, p: 2 }}
+      >
+        {imageUrl && (
+          <CardOverflow sx={{maxHeight: '55%', overflow:'hidden'}}>
+            <AspectRatio  ratio={1.5}>
+              <img
+                src={imageUrl}
+                //??? srcSet="https://images.unsplash.com/photo-1527549993586-dff825b37782?auto=format&fit=crop&w=286&dpr=2 2x"
+                loading="lazy"
+                alt=""
+              />
+            </AspectRatio>
+          </CardOverflow>
+        )}
+        <CardContent sx={{justifyContent: 'space-between'}}>
+          <Typography
+            level="title-md"
+            sx={{
+              flexGrow: 1,
+              alignContent: "center",
+              maxHeight: imageUrl ? '1lh' : '5lh',
+              overflow: "hidden",
+            }}
+          >
+            {title}
+          </Typography>
+          <Typography
+            level="body-xs"
+            sx={{ maxHeight: imageUrl ? '2lh' : '3lh', overflow: "hidden" }}
+          >
+            {description}
+          </Typography>
 
-        <Typography level="title-lg">{title}</Typography>
-        <Typography level="body-sm">{description}</Typography>
+          <FlexBox justify="flex-start">
+            <Typography level="text-sm" startDecorator={<IoIosHeart />}>
+              {favorCount || 0}
+            </Typography>
 
-        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-          <div style={{ flex: 1, display:'flex', alignItems: 'center'}}>
-            <IoIosHeart /> <span>{favorCount || 0}</span>
-          </div>
+            <Typography level="text-sm" startDecorator={<FaCommentAlt />}>
+              {commentsCount || 0}
+            </Typography>
 
-          <div style={{ flex: 1, display:'flex', alignItems: 'center'}}>
-            <FaCommentAlt /> <span>{commentsCount || 0}</span>
-          </div>
-
-          <div style={{ flex: 1, display:'flex', alignItems: 'center'}}>
-            <FaEye />
-            <span>{viewCount || 0}</span>
-          </div>
-        </div>
-        <>{post._id}</>
-        <>{Date.parse(post.createdAt)}</>
+            <Typography level="text-sm" startDecorator={<FaEye />}>
+              {viewCount || 0}
+            </Typography>
+          </FlexBox>
+        </CardContent>
       </Card>
     </Grid>
   );

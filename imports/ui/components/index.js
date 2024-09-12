@@ -5,5 +5,9 @@ import ChatRoom from './ChatRoom'
 import ProfileImg from './ProfileImg'
 import PostPanel from './PostDetail/PostPanel'
 import CommentsPanel from './PostDetail/CommentsPanel'
-export {Header, PostCard, UsersPanels, ChatRoom, ProfileImg, PostPanel, CommentsPanel}
+import FlexBox from './FlexBox'
+import PostList from './PostList'
+
+
+export {Header, PostCard, UsersPanels, ChatRoom, ProfileImg, PostPanel, CommentsPanel, FlexBox, PostList}
 

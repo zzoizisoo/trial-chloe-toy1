@@ -18,6 +18,7 @@ export default ({ }) => {
   return <Input
     value={text}
     onChange={e => setText(e.target.value)}
+    placeholder='Say something...'
     endDecorator={<Button
       disabled={!text}
       onClick={handleChatSubmit}>

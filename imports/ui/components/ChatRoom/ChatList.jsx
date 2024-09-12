@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useTracker, useSubscribe } from "meteor/react-meteor-data";
-import MyChatItem from "./MyChatItem";
-import OtherChatItem from "./OtherChatItem";
 import { ChatsCollection } from "../../../api/chats/collection";
 import { throttle } from "../../utils";
+import ChatItem from "./ChatItem";
 
 
-export default function ChatRoom() {
+export default function ChatList() {
   const user = useTracker(() => Meteor.user());
   const PAGINATION_SIZE = 20;
   const [pageLength, setPageLength] = useState(PAGINATION_SIZE);
@@ -65,20 +64,13 @@ export default function ChatRoom() {
     >
       {chatsWithProfileImg &&
         chatsWithProfileImg.map((chat) =>
-          chat.createdBy === user._id ? (
-            <MyChatItem
+      
+            <ChatItem
+              user={user}
               key={chat._id}
               chat={chat}
-              imgUrl={chat.profileImgUrl}
             />
-          ) : (
-            <OtherChatItem
-              key={chat._id}
-              chat={chat}
-              imgUrl={chat.profileImgUrl}
-            />
-          )
-        )}
+       )}
 
     </div>
   );

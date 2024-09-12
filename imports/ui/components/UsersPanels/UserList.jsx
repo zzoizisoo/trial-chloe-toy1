@@ -1,10 +1,10 @@
 import { Meteor } from "meteor/meteor";
 import { useTracker, useSubscribe } from "meteor/react-meteor-data";
 import React, { useState } from "react";
-import Input from "@mui/joy/Input";
-import { IoSearch } from "react-icons/io5";
-import ProfileImg from "../ProfileImg";
 import { throttle } from "../../utils";
+import { SearchBar } from "./SearchBar";
+import { UserListItem } from "./UserListItem";
+import { List } from "@mui/joy";
 
 export default function UserList({ handleSelectUser }) {
   const [searchInput, setSearchInput] = useState("");
@@ -58,43 +58,20 @@ export default function UserList({ handleSelectUser }) {
   return (
     <div style={{ flex: "1.5", display: "flex", flexDirection: "column" }}>
       <SearchBar searchInput={searchInput} onInputChange={onInputChange} />
-      <div
+      <List
         onScroll={onScroll}
-        style={{ display: "flex", flexDirection: "column", overflow: "auto" }}
+        sx={{ overflow: "auto" }}
       >
         {/* Bypassing props */}
         {users &&
           users.map((u) => (
             <UserListItem
-              handleSelectUser={handleSelectUser}
               key={u._id}
+              handleSelectUser={handleSelectUser}
               user={u}
             />
           ))}
-      </div>
+      </List>
     </div>
   );
 }
-
-const SearchBar = ({ searchInput, onInputChange }) => {
-  return (
-    <Input
-      value={searchInput}
-      onChange={onInputChange}
-      endDecorator={<IoSearch />}
-    />
-  );
-};
-
-const UserListItem = ({ user, handleSelectUser }) => {
-  return (
-    <div key={user._id} onClick={() => handleSelectUser(user)}>
-      <ProfileImg src={user.profile?.profileImgUrl} />
-
-      {user.profile?.name}
-      {user.status?.online
-        ? " Live"
-        : user.status?.lastLogin?.date.toLocaleString()}
-    </div>
-  );
-};

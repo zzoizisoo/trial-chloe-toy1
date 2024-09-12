@@ -34,7 +34,7 @@ export default () => {
 
         <Typography
           level="h1"
-          sx={{ flexGrow: 1, textAlign: "center", color: "white" }}
+          sx={{ flexGrow: 1, textAlign: "center", color: "white", fontSize:'1.5rem' }}
           onClick={() => FlowRouter.go("index")}
         >
           [Chloe] Toy Project
@@ -47,7 +47,7 @@ export default () => {
               onClick={() => FlowRouter.go(`/profile/${user._id}`)}
             >
               <Typography sx={{alignSelf: 'center', mr: 1}} color="inherit">{user.profile?.name}</Typography>
-              <ProfileImg src={user.profile?.profileImgUrl} size={40} />
+              <ProfileImg src={user.profile?.profileImgUrl} />
             </Box>
           ) : (
             <>

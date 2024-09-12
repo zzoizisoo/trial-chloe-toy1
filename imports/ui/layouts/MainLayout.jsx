@@ -1,12 +1,13 @@
-import React from 'react'
-import {Header} from '../components'
+import React from "react";
+import { Header } from "../components";
 
-export const MainLayout = ({content}) =>{ 
-    return <div>
-        <Header /> 
-
-        <main>
-            {content}
-        </main>
-    </div>
-}
+export const MainLayout = ({ content }) => {
+  return (
+    <>
+      <Header />
+      <main style={{maxWidth:1230, margin: "auto"}}>
+        {content}
+    </main>
+    </>
+  );
+};

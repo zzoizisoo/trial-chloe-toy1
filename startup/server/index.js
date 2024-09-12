@@ -7,6 +7,6 @@ import '../../imports/api/userFavorPosts/server/publications'
 import { createDumpPost, createDumpUser } from './fixtures';
 
 Meteor.startup(async () => {
-    createDumpUser(300);
+    // createDumpUser(300);
     createDumpPost(300)
 });

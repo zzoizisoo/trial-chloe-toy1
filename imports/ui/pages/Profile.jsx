@@ -94,7 +94,6 @@ export default () => {
                 ? URL.createObjectURL(newProfileImg)
                 : user.profile.profileImgUrl
             }
-            size={100}
           />
           <input type="file" accept="image/*" onChange={handleImageChange}/>
         </label>
