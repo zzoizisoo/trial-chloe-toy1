@@ -3,9 +3,9 @@ import React from "react";
 
 export default ({ src, size, sx }) => {
   if (src) {
-    return <Avatar size={size || "sm"} src={src} sx={sx} />;
+    return <Avatar size={size || ""} src={src} sx={sx} />;
   } else
     return (
-      <Avatar size={size || "sm"} color="primary" variant="solid" sx={sx} />
+      <Avatar size={size || ""} color="primary" variant="solid" sx={sx} />
     );
 };

@@ -47,7 +47,7 @@ export default () => {
               onClick={() => FlowRouter.go(`/profile/${user._id}`)}
             >
               <Typography sx={{alignSelf: 'center', mr: 1}} color="inherit">{user.profile?.name}</Typography>
-              <ProfileImg src={user.profile?.profileImgUrl} />
+              <ProfileImg size="sm" src={user.profile?.profileImgUrl} />
             </Box>
           ) : (
             <>

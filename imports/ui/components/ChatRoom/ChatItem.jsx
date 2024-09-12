@@ -67,7 +67,7 @@ export default ({ user, chat }) => {
       style={style.row}
     >
       <Box>
-        <ProfileImg src={chat.profileImgUrl} />
+        <ProfileImg size="sm" src={chat.profileImgUrl} />
       </Box>
       <Box sx={style.box}>
         <Typography level="body-sm" sx={style.typo}>

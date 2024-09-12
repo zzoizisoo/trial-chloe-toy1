@@ -13,7 +13,7 @@ export const UserListItem = ({ user, handleSelectUser }) => {
     <ListItem variant="soft" sx={{ mb: 0.5 }}>
       <ListItemButton onClick={() => handleSelectUser(user)}>
         <ListItemDecorator>
-          <ProfileImg src={user.profile?.profileImgUrl} />
+          <ProfileImg size="sm" src={user.profile?.profileImgUrl} />
         </ListItemDecorator>
 
         <Typography level="body-md">{user.profile?.name}</Typography>

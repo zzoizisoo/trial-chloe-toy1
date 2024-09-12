@@ -1,6 +1,9 @@
-import { Button } from "@mui/joy";
+import { Button, Textarea } from "@mui/joy";
 import React, { useState } from "react";
-import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+import { FlowRouter } from "meteor/ostrio:flow-router-extra";
+
+
+
 
 export default () => {
   const postId = FlowRouter.getParam("pid");
@@ -23,8 +26,12 @@ export default () => {
 
   return (
     <div>
-      <textarea value={content} onChange={handleChange} />
-      <Button onClick={handleSubmitComment}>Add Comment</Button>
+      <div>
+        <Textarea color="neutral" variant="outlined" value={content} minRows={3} onChange={handleChange} sx={
+          {marginBottom: 1}
+        } placeholder="Write a Response..."/>
+      </div>
+      <Button sx={{display: 'block', ml: 'auto'}} onClick={handleSubmitComment}>Add Comment</Button>
     </div>
   );
 };
