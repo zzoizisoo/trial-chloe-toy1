@@ -11,7 +11,7 @@ export default () => {
   const user = useTracker(() => Meteor.user());
 
   return (
-    <AppBar position="static" sx={{mb: 3}}>
+    <AppBar position="static">
       <Toolbar>
         {user && (
           <div>
