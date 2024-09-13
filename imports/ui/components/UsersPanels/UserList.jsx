@@ -10,22 +10,29 @@ export default function UserList({ handleSelectUser }) {
   const [searchInput, setSearchInput] = useState("");
   const PAGINATION_SIZE = 20;
   const [pageLength, setPageLength] = useState(PAGINATION_SIZE);
+
   const usersProfilesLoading = useSubscribe(
     "usersProfiles",
     searchInput,
     pageLength
   );
 
+  // 🤔 If you dont call this function, no re-render will occur when the loading state change
+  // w.o this call -> pagination after setting search input is not occur
+  console.log('userProfilesIsLoading?', usersProfilesLoading())
+
   const users = useTracker(
     () =>
       Meteor.users
         .find(
-          {
-            "profile.name": {
-              $regex: searchInput,
-              $options: "i",
-            },
-          },
+          searchInput
+            ? {
+                "profile.name": {
+                  $regex: searchInput.replace(/[-[\]{}()*+?.,\\^$|]/g, "\\$&"),
+                  $options: "i",
+                },
+              }
+            : {},
           {
             sort: {
               "status.online": -1,
@@ -40,15 +47,18 @@ export default function UserList({ handleSelectUser }) {
 
   const onInputChange = (e) => {
     setSearchInput(e.target.value);
+    setPageLength(PAGINATION_SIZE)
   };
 
   const onScroll = throttle(
     ({ target: { clientHeight, scrollHeight, scrollTop } }) => {
       const PAGING_THRESHHOLD = 100;
+      console.log('-------throttled: userProfilesLoading?', usersProfilesLoading())
       if (
         !usersProfilesLoading() &&
         Math.abs(scrollTop) + clientHeight + PAGING_THRESHHOLD > scrollHeight
       ) {
+        console.log('-------page length set', !usersProfilesLoading())
         setPageLength(pageLength + PAGINATION_SIZE);
       }
     },
@@ -58,10 +68,7 @@ export default function UserList({ handleSelectUser }) {
   return (
     <div style={{ flex: "1.5", display: "flex", flexDirection: "column" }}>
       <SearchBar searchInput={searchInput} onInputChange={onInputChange} />
-      <List
-        onScroll={onScroll}
-        sx={{ overflow: "auto" }}
-      >
+      <List onScroll={onScroll} sx={{ overflow: "auto" }}>
         {/* Bypassing props */}
         {users &&
           users.map((u) => (

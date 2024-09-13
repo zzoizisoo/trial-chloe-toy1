@@ -6,7 +6,7 @@ Meteor.publish("usersProfiles", function (searchInput, limit) {
     searchInput
       ? {
           "profile.name": {
-            $regex: searchInput,
+            $regex: searchInput.replace(/[-[\]{}()*+?.,\\^$|]/g, "\\$&"),
             $options: "i",
           },
         }
