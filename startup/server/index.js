@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import '../common'
+import '../both'
 import '../../imports/api/chats/server/publications'
 import '../../imports/api/users/server/publications'
 import '../../imports/api/comments/server/publications'

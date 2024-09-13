@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import '../common'
+import '../both'
 import './routes'
 
 Meteor.startup(() => {});
