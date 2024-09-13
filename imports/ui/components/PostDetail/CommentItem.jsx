@@ -29,3 +29,4 @@ export default ({ comment }) => {
     </FlexBox>
   );
 };
+ 

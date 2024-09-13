@@ -11,13 +11,56 @@ import { MdLock } from "react-icons/md";
 
 export default () => {
   const [newProfileImg, setNewProfileImg] = useState(null);
+  const [errors, setErrors] = useState({});
   const theme = useTheme();
+
   const handleImageChange = (e) => {
+    if(e.target.files[0].size > 3000000 ){ 
+      alert("이미지 사이즈는 3MB 이하로 부탁드립니다용?")
+      return;
+    }
     setNewProfileImg(e.target.files[0]);
   };
 
-  const handleFormChange = (e) => {
-    console.log(e.target.name, e.target.value);
+  const handleFormChange = ({ target }) => {
+    const { name, value, form } = target;
+    switch (name) {
+      case "email":
+        if (!value.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)) {
+          setErrors({ ...errors, [name]: "invalid format" });
+        } else {
+          setErrors({ ...errors, [name]: "" });
+        }
+        break;
+      case "password":
+        if (value.length < 6) {
+          setErrors({
+            ...errors,
+            [name]: "needs to be grater than 6 character",
+          });
+        } else if (
+          !value.match(/^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[\W_]).{6,}$/)
+        ) {
+          setErrors({
+            ...errors,
+            [name]: "use at least one alphabet, number, special character",
+          });
+        } else {
+          setErrors({ ...errors, [name]: "" });
+        }
+        break;
+      case "passwordConfirm":
+        const formData = new FormData(form);
+        const { password } = Object.fromEntries(formData.entries());
+        if (!password) {
+          setErrors({ ...errors, [name]: "please type password first" });
+        } else if (password !== value) {
+          setErrors({ ...errors, [name]: "passwords are not matching" });
+        } else {
+          setErrors({ ...errors, [name]: "" });
+        }
+        break;
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -48,7 +91,6 @@ export default () => {
           `userProfileImg/${fileId}.png`,
           newProfileImg
         );
-        // formJson['profile.profileImgUrl'] = url
         newUser.profile.profileImgUrl = url;
       } catch (e) {
         console.error(e);
@@ -69,8 +111,9 @@ export default () => {
 
       <form onSubmit={handleSubmit} onChange={handleFormChange}>
         <InputProfileImg
-          image={newProfileImg ? URL.createObjectURL(newProfileImg) : ""}
+          src={newProfileImg ? URL.createObjectURL(newProfileImg) : ""}
           handleImageChange={handleImageChange}
+          handleDeleteImage={()=>setNewProfileImg(null)}
         />
 
         <InputProfileInfo
@@ -78,7 +121,7 @@ export default () => {
           name="email"
           type="text"
           icon={<AiFillMail color={theme.palette.primary[500]} />}
-          // error="something is so wrong"
+          error={errors.email}
           required
         />
 
@@ -95,6 +138,7 @@ export default () => {
           name="password"
           type="password"
           icon={<MdLock color={theme.palette.primary[500]} />}
+          error={errors.password}
           required
         />
 
@@ -103,6 +147,7 @@ export default () => {
           name="passwordConfirm"
           type="password"
           icon={<MdLock color={theme.palette.primary[500]} />}
+          error={errors.passwordConfirm}
           required
         />
 

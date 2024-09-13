@@ -16,15 +16,16 @@ const VisuallyHiddenInput = styled("input")`
 export default function InputFileUpload({ onChange }) {
   return (
     <Button
-      size="sm"
+      size="xs"
       component="label"
       tabIndex={-1}
       color="primary"
       sx={{
-        width: '80px',
+        width: 55,
+        height: 22
       }}
-    >
-      <Typography color="white" fontSize={10}>Upload</Typography>
+    >   
+      <span style={{fontSize:'0.8em'}}>Upload</span>
       <VisuallyHiddenInput type="file" onChange={onChange} />
     </Button>
   );

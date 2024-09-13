@@ -89,7 +89,7 @@ export default () => {
 
       <form onSubmit={handleSubmit}>
         <InputProfileImg
-          image={
+          src={
             newProfileImg
               ? URL.createObjectURL(newProfileImg)
               : user.profile.profileImgUrl
