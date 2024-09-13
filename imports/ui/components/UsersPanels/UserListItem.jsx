@@ -7,6 +7,7 @@ import {
   Typography,
   ListItemContent,
 } from "@mui/joy";
+import moment from "moment";
 
 export const UserListItem = ({ user, handleSelectUser }) => {
   return (
@@ -21,7 +22,9 @@ export const UserListItem = ({ user, handleSelectUser }) => {
         <Typography level="body-xs" fontStyle="italic">
           {user.status?.online
             ? "Live"
-            : user.status?.lastLogin?.date.toLocaleString()}
+            : user.status?.lastLogin
+            ? moment(user.status.lastLogin.date).fromNow()
+            : ""}
         </Typography>
       </ListItemButton>
     </ListItem>

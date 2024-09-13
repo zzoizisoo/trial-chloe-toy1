@@ -2,11 +2,9 @@ import React from "react";
 import ProfileImg from "../ProfileImg";
 import FlexBox from "../FlexBox";
 import { Typography, useTheme } from "@mui/joy";
+import moment from "moment";
 
 export default ({ comment }) => {
-  const createdAtInLocaleString = new Date(comment.createdAt).toLocaleString(
-    "ko-kr"
-  );
   const theme = useTheme();
 
   return (
@@ -24,7 +22,7 @@ export default ({ comment }) => {
       <div>
         <FlexBox gap={20}>
           <Typography fontWeight="lg">{comment.user.profile.name}</Typography>
-          <Typography level="body-xs" alignSelf={'flex-end'}>{createdAtInLocaleString}</Typography>
+          <Typography level="body-xs" alignSelf={'flex-end'}>{moment(comment.createdAt).fromNow()}</Typography>
         </FlexBox>
         <div style={{marginTop: 10}}>{comment.content}</div>
       </div>
