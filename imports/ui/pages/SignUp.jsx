@@ -62,14 +62,14 @@ export default () => {
   };
 
   return (
-   <>
+    <>
       <Typography level="h2" textAlign="center" mb={4} mt={6} fontSize="1.5rem">
         Sign Up
       </Typography>
 
       <form onSubmit={handleSubmit} onChange={handleFormChange}>
-        <InputProfileImg 
-          image={newProfileImg}
+        <InputProfileImg
+          image={newProfileImg ? URL.createObjectURL(newProfileImg) : ""}
           handleImageChange={handleImageChange}
         />
 
@@ -122,8 +122,7 @@ export default () => {
             Cancel
           </Button>
           <Button sx={{ width: "6rem", mr: 1 }} type="submit">
-            {" "}
-            OK{" "}
+            OK
           </Button>
         </FlexBox>
       </form>

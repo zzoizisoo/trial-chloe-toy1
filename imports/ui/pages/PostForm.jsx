@@ -1,10 +1,12 @@
 import { Mongo } from "meteor/mongo";
-import { Button } from "@mui/joy";
+import { Button, Input, Typography, Box } from "@mui/joy";
 import React, { useState } from "react";
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import { UploadObject } from "../../../s3";
 import { v4 as uuidv4 } from "uuid";
 import { useMethod } from "../hooks";
+import { FlexBox, InputPostText } from "../components";
+import InputPostTextarea from "../components/InputPostTextarea";
 
 export default ({ postId }) => {
   // if no postId -> creating new post
@@ -69,43 +71,51 @@ export default ({ postId }) => {
   };
 
   return (
-    <>
+    <Box sx={{width: 800, mx: 'auto', mt: 3}}>
       <form onSubmit={handleSubmit} onChange={handleFormChange}>
-        <label>
-          Title
-          <input name="title" defaultValue={defaultValues.title} />
-        </label>
 
-        <hr />
+        {/* TODO: Default values are not passed 🤔 */}
+        <InputPostText
+          name="title"
+          formDisplayLabel="Title"
+          defaultValue={defaultValues.title}
+        />
+       
+        <InputPostText
+          name="description"
+          formDisplayLabel="Description"
+          defaultValue={defaultValues.description}
+        />
 
-        <label>
-          Description
-          <input name="description" defaultValue={defaultValues.description} />
-        </label>
-        <hr />
+        <Typography level="body-xs"> Image</Typography>
+        {newImage ? (
+          <img
+            style={{ maxWidth: "100%" }}
+            src={URL.createObjectURL(newImage)}
+          />
+        ) : post ? (
+          <img style={{ maxWidth: "100%" }} src={post.imageUrl} />
+        ) : (
+          <></>
+        )}
+        <Input
+          name="imageUrl"
+          type="file"
+          accept="image/*"
+          sx={{ alignItems: "center", marginBottom: 2 }}
+        />
 
-        <label>
-          Image
-          {newImage ? (
-            <img src={URL.createObjectURL(newImage)} />
-          ) : post ? (
-            <img src={post.imageUrl} />
-          ) : (
-            <></>
-          )}
-          <input name="imageUrl" type="file" accept="image/*" />
-        </label>
+        <InputPostTextarea
+          formDisplayLabel="Content"
+          name="content"
+          defaultValue={defaultValues.content}
+        />
 
-        <hr />
-
-        <label>
-          Content
-          <textarea name="content" defaultValue={defaultValues.content} />
-        </label>
-
-        <Button type="button"> Cancel </Button>
-        <Button type="submit"> Save </Button>
+        <FlexBox gap={10} justify="center" style={{marginTop: 50}}> 
+          <Button type="button" variant="outlined"> Cancel </Button>
+          <Button type="submit"> Save </Button>
+        </FlexBox>
       </form>
-    </>
+    </Box>
   );
 };

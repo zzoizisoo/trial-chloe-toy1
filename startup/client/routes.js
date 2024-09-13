@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { mount } from 'react-mounter';
-import { MainLayout, PostDetailLayout, SignUpLayout } from '../../imports/ui/layouts';
+import { MainLayout, PostDetailLayout, SignUpLayout, PostWriteLayout } from '../../imports/ui/layouts';
 import { SignUp, Login, Favorite, Main, PostForm, Profile, Post} from '../../imports/ui/pages'
 
 // TODO
@@ -54,7 +54,7 @@ const loggedIn = FlowRouter.group({
 loggedIn.route('/post-write', { 
     name: 'post-write',
     action(){ 
-        mount(MainLayout, {
+        mount(PostWriteLayout, {
             content: <PostForm/> 
         })
     }
@@ -63,7 +63,7 @@ loggedIn.route('/post-write', {
 loggedIn.route('/post/:pid/edit', { 
     name: 'post-edit',
     action({pid}){ 
-        mount(MainLayout, {
+        mount(PostWriteLayout, {
             content: <PostForm postId={pid}/> 
         })
     }

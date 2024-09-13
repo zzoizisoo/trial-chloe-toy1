@@ -8,5 +8,5 @@ import { createDumpPost, createDumpUser } from './fixtures';
 
 Meteor.startup(async () => {
     // createDumpUser(300);
-    createDumpPost(300)
+    // createDumpPost(300)
 });

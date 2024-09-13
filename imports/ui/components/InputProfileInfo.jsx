@@ -4,7 +4,7 @@ import { FlexBox } from "../components";
 
 import { FaExclamationCircle } from "react-icons/fa";
 
-export default ({ formDisplayLabel, name, type, icon, required, error }) => {
+export default ({ formDisplayLabel, name, type, icon, required, disabled, defaultValue, error }) => {
   const theme = useTheme();
 
   const styles = {
@@ -40,6 +40,8 @@ export default ({ formDisplayLabel, name, type, icon, required, error }) => {
         type={type}
         sx={{ width: 300, "--Input-radius": "50px" }}
         endDecorator={icon}
+        defaultValue={defaultValue}
+        disabled={disabled? true:false}
         required={required ? true : false}
       />
       {error && (

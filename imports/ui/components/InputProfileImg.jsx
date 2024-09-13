@@ -6,7 +6,7 @@ export default ({ image, handleImageChange }) => {
     <FlexBox direction="column" align="center" style={{ marginBottom: 30 }}>
       <ProfileImg
         sx={{ "--Avatar-size": "80px", mb: 2 }}
-        src={image ? URL.createObjectURL(image) : ""}
+        src={image ? image : ""}
       />
       <InputFileUpload
         type="file"

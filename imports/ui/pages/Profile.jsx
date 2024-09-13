@@ -1,14 +1,12 @@
-
+import { Button, Typography } from "@mui/joy";
 import React, { useState } from "react";
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import { UploadObject } from "../../../s3";
 import { useTracker } from "meteor/react-meteor-data";
-import { ProfileImg } from "../components";
-import { Button, Typography } from "@mui/joy";
+import { InputProfileImg, InputProfileInfo, FlexBox, ChangePasswordDialog } from "../components";
 import { v4 as uuidv4 } from "uuid";
 
-
-// TODO: 
+// TODO:
 // delete profile image
 // form validation
 // error notification
@@ -33,7 +31,7 @@ export default () => {
     const formJson = Object.fromEntries(formData.entries());
 
     let newProfile = {};
-    let newPassword = "";
+    // let newPassword = "";
 
     // PROFILE
     Object.entries(defaultProfile).forEach(([key]) => {
@@ -55,105 +53,97 @@ export default () => {
     }
 
     // PASSWORD
-    if (formJson.password && formJson.password === formJson.passwordConfirm) {
-      newPassword = formJson.password;
-    }
-    if (Object.keys(newProfile).length === 0 && newPassword === "") return;
+    // if (formJson.password && formJson.password === formJson.passwordConfirm) {
+    //   newPassword = formJson.password;
+    // }
+    if (Object.keys(newProfile).length === 0) return;
 
     setIsSubmitLoading(true);
-    await Meteor.callAsync("updateUserProfile", newProfile, newPassword);
+    await Meteor.callAsync("updateUserProfile", newProfile);
     setIsSubmitLoading(false);
   };
 
   // const handleFormChange = ({ target }) => {
   //   switch (target.name) {
   //     case "profile.profileImgUrl":
-  
+
   //     default:
   //       break;
   //   }
   // };
 
-  const handleImageChange = ({target}) =>{ 
+  const handleImageChange = ({ target }) => {
     setNewProfileImg(target.files[0]);
-  }
+  };
 
   const logout = () => {
     Meteor.logout();
     FlowRouter.go("/");
   };
 
-  
   return (
     <>
       <Typography level="h2" textAlign="center" mb={4} mt={6} fontSize="1.5rem">
-        Log In
+        Profile
       </Typography>
 
-      <form onSubmit={handleSubmit} >
-        <label>
-          <ProfileImg
-            src={
-              newProfileImg
-                ? URL.createObjectURL(newProfileImg)
-                : user.profile.profileImgUrl
-            }
-          />
-          <input type="file" accept="image/*" onChange={handleImageChange}/>
-        </label>
+      <form onSubmit={handleSubmit}>
+        <InputProfileImg
+          image={
+            newProfileImg
+              ? URL.createObjectURL(newProfileImg)
+              : user.profile.profileImgUrl
+          }
+          handleImageChange={handleImageChange}
+        />
 
-        <hr />
+        <InputProfileInfo
+          formDisplayLabel="Email"
+          type="text"
+          defaultValue={user.emails[0].address}
+          disabled
+        />
 
-        <label>
-          Email:
-          <input
-            type="text"
-            defaultValue={user.emails[0].address}
-            disabled
-          />
-        </label>
+        <InputProfileInfo
+          formDisplayLabel="Name"
+          name="profile.name"
+          type="text"
+          defaultValue={defaultProfile["profile.name"]}
+        />
 
-        <hr />
+        {/* <InputProfileInfo
+          formDisplayLabel="Password"
+          name="password"
+          type="password"
+        />
 
-        <label>
-          Name:
-          <input
-            name="profile.name"
-            type="text"
-            defaultValue={defaultProfile["profile.name"]}
-          />
-        </label>
+        <InputProfileInfo
+          formDisplayLabel="Password Confirm"
+          name="passwordConfirm"
+          type="password"
+        /> */}
 
-        <hr />
+        <InputProfileInfo
+          formDisplayLabel="Phone Number"
+          name="profile.phoneNumber"
+          type="text"
+          defaultValue={defaultProfile["profile.phoneNumber"]}
+        />
 
-        <label>
-          New Password:
-          <input name="password" type="password" />
-          <hr />
-        </label>
-
-        <label>
-          New Password Confirm:
-          <input name="passwordConfirm" type="password" />
-        </label>
-
-        <hr />
-
-        <label>
-          Phone Number:
-          <input
-            name="profile.phoneNumber"
-            type="text"
-            defaultValue={defaultProfile["profile.phoneNumber"]}
-          />
-        </label>
-
-        <div>
-          <Button type="button"> Cancel </Button>
-          <Button type="submit">{isSubmitLoading ? "Loading" : "OK"}</Button>
-        </div>
+        <FlexBox justify="center" style={{ marginTop: 50 }}>
+          <Button
+            type="button"
+            sx={{ width: "6rem", mr: 1 }}
+            variant="outlined"
+            onClick={() => FlowRouter.go("/")}
+          >
+            Cancel
+          </Button>
+          <Button sx={{ width: "6rem", mr: 1 }} type="submit">{isSubmitLoading ? "Loading" : "OK"}</Button>
+        </FlexBox>
       </form>
-      <Button onClick={logout}>Log out</Button>
+      <ChangePasswordDialog />
+      <Button sx={{mt:1}} variant="plain" onClick={logout}>Log out</Button>
     </>
   );
 };

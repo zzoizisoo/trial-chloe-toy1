@@ -1,4 +1,6 @@
 import { PostDetailLayout } from "./PostsDetailLayout";
 import { MainLayout } from "./MainLayout";
 import { SignUpLayout } from "./SignUpLayout";
-export {PostDetailLayout, MainLayout, SignUpLayout}
+import PostWriteLayout from "./PostWriteLayout";
+
+export {PostDetailLayout, MainLayout, SignUpLayout, PostWriteLayout}

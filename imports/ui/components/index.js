@@ -10,7 +10,10 @@ import PostList from './PostList'
 import InputFileUpload from './InputFileUpload'
 import InputProfileImg from './InputProfileImg'
 import InputProfileInfo from './InputProfileInfo'
+import ChangePasswordDialog from './ChangePasswordDialog'
+import InputPostText from './InputPostText'
 
 
-export {Header, PostCard, UsersPanels, ChatRoom, ProfileImg, PostPanel, CommentsPanel, FlexBox, PostList, InputFileUpload, InputProfileImg, InputProfileInfo}
+
+export {Header, PostCard, UsersPanels, ChatRoom, ProfileImg, PostPanel, CommentsPanel, FlexBox, PostList, InputFileUpload, InputProfileImg, InputProfileInfo, ChangePasswordDialog, InputPostText}
 
