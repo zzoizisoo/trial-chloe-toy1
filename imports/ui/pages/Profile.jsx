@@ -4,7 +4,9 @@ import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import { UploadObject } from "../../../s3";
 import { useTracker } from "meteor/react-meteor-data";
 import { InputProfileImg, InputProfileInfo, FlexBox, ChangePasswordDialog } from "../components";
+
 import { v4 as uuidv4 } from "uuid";
+
 
 // TODO:
 // delete profile image
@@ -52,25 +54,12 @@ export default () => {
       }
     }
 
-    // PASSWORD
-    // if (formJson.password && formJson.password === formJson.passwordConfirm) {
-    //   newPassword = formJson.password;
-    // }
     if (Object.keys(newProfile).length === 0) return;
 
     setIsSubmitLoading(true);
     await Meteor.callAsync("updateUserProfile", newProfile);
     setIsSubmitLoading(false);
   };
-
-  // const handleFormChange = ({ target }) => {
-  //   switch (target.name) {
-  //     case "profile.profileImgUrl":
-
-  //     default:
-  //       break;
-  //   }
-  // };
 
   const handleImageChange = ({ target }) => {
     setNewProfileImg(target.files[0]);
@@ -110,18 +99,6 @@ export default () => {
           type="text"
           defaultValue={defaultProfile["profile.name"]}
         />
-
-        {/* <InputProfileInfo
-          formDisplayLabel="Password"
-          name="password"
-          type="password"
-        />
-
-        <InputProfileInfo
-          formDisplayLabel="Password Confirm"
-          name="passwordConfirm"
-          type="password"
-        /> */}
 
         <InputProfileInfo
           formDisplayLabel="Phone Number"

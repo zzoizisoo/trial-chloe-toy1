@@ -1,6 +1,6 @@
 import React from "react";
 import { UsersPanels, ChatRoom, FlexBox } from "../components";
-import { PostList } from "../components";
+import { Posts } from "../components";
 
 export default function Main() {
   return (
@@ -9,7 +9,7 @@ export default function Main() {
           <UsersPanels />
           <ChatRoom />
       </FlexBox>
-      <PostList dataSource="getPosts" />
+      <Posts dataSource="getPosts" />
     </>
   );
 }

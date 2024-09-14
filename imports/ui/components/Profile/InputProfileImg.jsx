@@ -1,6 +1,8 @@
 import React from "react";
-import { FlexBox, ProfileImg, InputFileUpload } from "../components";
 import { Button } from "@mui/joy";
+import FlexBox from "../FlexBox";
+import ProfileImg from "../ProfileImg";
+import InputFileUpload from "../InputFileUpload";
 
 export default ({ src, handleImageChange, handleDeleteImage }) => {
   return (

@@ -5,8 +5,8 @@ import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import { UploadObject } from "../../../s3";
 import { v4 as uuidv4 } from "uuid";
 import { useMethod } from "../hooks";
-import { FlexBox, InputPostText, InputProfileInfo } from "../components";
-import InputPostTextarea from "../components/InputPostTextarea";
+import { FlexBox, InputPostText, InputPostTextarea } from "../components";
+import { InputPostImage } from "../components/PostForm";
 
 export default ({ postId }) => {
   // if no postId -> creating new post
@@ -86,6 +86,7 @@ export default ({ postId }) => {
           defaultValue={defaultValues.title}
         />
 
+
         <InputPostText
           name="description"
           type="text"
@@ -93,24 +94,12 @@ export default ({ postId }) => {
           defaultValue={defaultValues.description}
         />
 
-        <Typography level="body-xs"> Image</Typography>
-        {newImage ? (
-          <img
-            style={{ maxWidth: "100%" }}
-            src={URL.createObjectURL(newImage)}
-          />
-        ) : post ? (
-          <img style={{ maxWidth: "100%" }} src={post.imageUrl} />
-        ) : (
-          <></>
-        )}
-        <Input
-          name="imageUrl"
-          type="file"
-          accept="image/*"
-          sx={{ alignItems: "center", marginBottom: 2 }}
-        />
-
+       <InputPostImage 
+         name="imageUrl"
+         formDisplayLabel="Image"
+         image={newImage || post?.imageUrl}
+       />
+      
         <InputPostTextarea
           formDisplayLabel="Content"
           name="content"

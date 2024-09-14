@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Grid, Button } from "@mui/joy";
-import { PostCard } from ".";
-import { useMethodPagination } from "../hooks";
+import PostCard from "./PostCard";
+import { useMethodPagination } from "../../hooks";
+
 
 export default ({ dataSource }) => {
   const PAGINATION_COUNT = 100;

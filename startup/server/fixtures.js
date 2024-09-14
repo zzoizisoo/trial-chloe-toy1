@@ -14,6 +14,7 @@ export const createDumpUser = (count) =>{
     }
   }
 
+  //SHOULD BE DONE AFTER USER IS CREATED
   export const createDumpPost = async (count) =>{ 
     for(let i = 0; i < count; i++){ 
         const _ = `post_${Math.random().toString(36).substring(2,11)}`
@@ -21,7 +22,7 @@ export const createDumpUser = (count) =>{
             title: `title ${_}`,
             description: `description + ${_}`,
             content: `content ${_}`,
-            createdBy: 'TTFi8EtvX3ZtYew5k', //🤔
+            createdBy: 'TTFi8EtvX3ZtYew5k', 
             imageUrl: 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png',
             createdAt: new Date(),
         }

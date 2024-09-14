@@ -10,7 +10,8 @@ import {
 import { FaEye, FaCommentAlt } from "react-icons/fa";
 import { IoIosHeart } from "react-icons/io";
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
-import FlexBox from "./FlexBox";
+import FlexBox from "../FlexBox";
+
 
 export default ({ post }) => {
   const {

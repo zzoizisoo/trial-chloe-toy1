@@ -1,19 +1,29 @@
-import Header from './Header'
-import PostCard from './PostCard'
-import UsersPanels from './UsersPanels'
-import ChatRoom from './ChatRoom'
-import ProfileImg from './ProfileImg'
-import PostPanel from './PostDetail/PostPanel'
-import CommentsPanel from './PostDetail/CommentsPanel'
-import FlexBox from './FlexBox'
-import PostList from './PostList'
-import InputFileUpload from './InputFileUpload'
-import InputProfileImg from './InputProfileImg'
-import InputProfileInfo from './InputProfileInfo'
-import ChangePasswordDialog from './ChangePasswordDialog'
-import InputPostText from './InputPostText'
+import Header from "./Header";
+import UsersPanels from "./UsersPanels";
+import ChatRoom from "./ChatRoom";
+import ProfileImg from "./ProfileImg";
+import PostPanel from "./PostDetail/PostPanel";
+import CommentsPanel from "./PostDetail/CommentsPanel";
+import FlexBox from "./FlexBox";
+import Posts from "./Posts";
+import InputFileUpload from "./InputFileUpload";
+import { InputPostTextarea, InputPostText } from "./PostForm";
+import { ChangePasswordDialog, InputProfileImg, InputProfileInfo } from "./Profile";
 
 
-
-export {Header, PostCard, UsersPanels, ChatRoom, ProfileImg, PostPanel, CommentsPanel, FlexBox, PostList, InputFileUpload, InputProfileImg, InputProfileInfo, ChangePasswordDialog, InputPostText}
-
+export {
+  Header,
+  UsersPanels,
+  ChatRoom,
+  ProfileImg,
+  PostPanel,
+  CommentsPanel,
+  FlexBox,
+  Posts,
+  InputFileUpload,
+  InputProfileImg,
+  InputProfileInfo,
+  ChangePasswordDialog,
+  InputPostText,
+  InputPostTextarea
+};

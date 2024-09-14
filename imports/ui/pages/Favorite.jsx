@@ -1,5 +1,5 @@
 import React from "react";
-import { PostList } from "../components";
+import { Posts } from "../components";
 import { Typography } from "@mui/joy";
 
 export default function FavoritePage() {
@@ -8,7 +8,7 @@ export default function FavoritePage() {
       <Typography level="h2" textAlign="center" mb={2} fontSize="1.5rem">
         Favorite
       </Typography>
-      <PostList dataSource="getFavoritePosts" />
+      <Posts dataSource="getFavoritePosts" />
     </>
   );
 }

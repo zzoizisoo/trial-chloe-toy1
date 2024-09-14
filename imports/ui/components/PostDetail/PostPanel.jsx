@@ -38,7 +38,7 @@ export default () => {
 
             {post.imageUrl && (
               <img
-                style={{ display: "block", width: "90%", margin: "0 auto" }}
+                style={{ display: "block", maxWidth: "90%", margin: "0 auto" }}
                 src={post.imageUrl}
               />
             )}

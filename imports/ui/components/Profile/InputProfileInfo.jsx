@@ -1,8 +1,7 @@
 import React from "react";
 import { Typography, Input, useTheme } from "@mui/joy";
-import { FlexBox } from "../components";
-
 import { FaExclamationCircle } from "react-icons/fa";
+import FlexBox from "../FlexBox";
 
 export default ({ formDisplayLabel, name, type, icon, required, disabled, defaultValue, error }) => {
   const theme = useTheme();
