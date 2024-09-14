@@ -1,12 +1,16 @@
 import { Button, Typography } from "@mui/joy";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import { UploadObject } from "../../../s3";
 import { useTracker } from "meteor/react-meteor-data";
-import { InputProfileImg, InputProfileInfo, FlexBox, ChangePasswordDialog } from "../components";
+import {
+  InputProfileImg,
+  InputProfileInfo,
+  FlexBox,
+  ChangePasswordDialog,
+} from "../components";
 
 import { v4 as uuidv4 } from "uuid";
-
 
 // TODO:
 // delete profile image
@@ -14,12 +18,21 @@ import { v4 as uuidv4 } from "uuid";
 // error notification
 // reuseness with signup?
 export default () => {
-  const user = useTracker(() => Meteor.user());
-  const [newProfileImg, setNewProfileImg] = useState(null);
+  const user = useTracker(() => Meteor.user(),[]);
+  const [profileImg, setProfileImg] = useState(null);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
 
-  //setPassword 옵션에 logOut: true 하면 헬게이트 오픈🎉
-  if (!user) return <></>;
+  useEffect(() => {
+    if (user) {
+      if (user.profile?.profileImgUrl) {
+        setProfileImg(user.profile.profileImgUrl);
+      }
+    }
+  }, [user]);
+
+  // 🤔 근데 얘도 그럼 Input이 defaultValue로 안돼?
+  // 어차피 loggedIn 아니면 redirection 될텐데 왜 우 왜 우 외?
+  // if (!user) return <></>;
 
   const defaultProfile = {
     "profile.name": user.profile.name,
@@ -33,7 +46,6 @@ export default () => {
     const formJson = Object.fromEntries(formData.entries());
 
     let newProfile = {};
-    // let newPassword = "";
 
     // PROFILE
     Object.entries(defaultProfile).forEach(([key]) => {
@@ -41,17 +53,19 @@ export default () => {
       if (formJson[key] === defaultProfile[key]) return;
       newProfile[key] = formJson[key];
     });
-    if (newProfileImg) {
+    if (profileImg) {
       try {
         const fileId = uuidv4();
         const url = await UploadObject(
           `userProfileImg/${fileId}.png`,
-          newProfileImg
+          profileImg
         );
         newProfile["profile.profileImgUrl"] = url;
       } catch (e) {
         console.error(e);
       }
+    } else {
+      newProfile["profile.profileImgUrl"] = ""
     }
 
     if (Object.keys(newProfile).length === 0) return;
@@ -61,9 +75,13 @@ export default () => {
     setIsSubmitLoading(false);
   };
 
-  const handleImageChange = ({ target }) => {
-    setNewProfileImg(target.files[0]);
+  const handleChangeImage = ({ target }) => {
+    setProfileImg(target.files[0]);
   };
+
+  const handleDeleteImage = () => {
+    setProfileImg(null)
+  }
 
   const logout = () => {
     Meteor.logout();
@@ -78,12 +96,9 @@ export default () => {
 
       <form onSubmit={handleSubmit}>
         <InputProfileImg
-          src={
-            newProfileImg
-              ? URL.createObjectURL(newProfileImg)
-              : user.profile.profileImgUrl
-          }
-          handleImageChange={handleImageChange}
+          image={profileImg}
+          handleChangeImage={handleChangeImage}
+          handleDeleteImage={handleDeleteImage}
         />
 
         <InputProfileInfo
@@ -116,11 +131,15 @@ export default () => {
           >
             Cancel
           </Button>
-          <Button sx={{ width: "6rem", mr: 1 }} type="submit">{isSubmitLoading ? "Loading" : "OK"}</Button>
+          <Button sx={{ width: "6rem", mr: 1 }} type="submit">
+            {isSubmitLoading ? "Loading" : "OK"}
+          </Button>
         </FlexBox>
       </form>
       <ChangePasswordDialog />
-      <Button sx={{mt:1}} variant="plain" onClick={logout}>Log out</Button>
+      <Button sx={{ mt: 1 }} variant="plain" onClick={logout}>
+        Log out
+      </Button>
     </>
   );
 };
