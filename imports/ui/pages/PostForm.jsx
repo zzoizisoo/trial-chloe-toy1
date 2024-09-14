@@ -5,15 +5,19 @@ import { FlowRouter } from "meteor/ostrio:flow-router-extra";
 import { UploadObject } from "../../../s3";
 import { v4 as uuidv4 } from "uuid";
 import { useMethod } from "../hooks";
-import { FlexBox, InputPostText } from "../components";
+import { FlexBox, InputPostText, InputProfileInfo } from "../components";
 import InputPostTextarea from "../components/InputPostTextarea";
 
 export default ({ postId }) => {
   // if no postId -> creating new post
   // else -> editing post
   // onsubmit -> upsert post
-  const post = useMethod("getPost", postId);
+
+  //🤔 isn't it re-rendered when useMethod set it's result? cuz post is state of the result.
+  const post = useMethod("getPost", postId); 
   const [newImage, setNewImage] = useState(undefined);
+
+  if(postId && !post) return <>Loading</>;
 
   const defaultValues = post
     ? {
@@ -77,12 +81,14 @@ export default ({ postId }) => {
         {/* TODO: Default values are not passed 🤔 */}
         <InputPostText
           name="title"
+          type="text"
           formDisplayLabel="Title"
           defaultValue={defaultValues.title}
         />
-       
+
         <InputPostText
           name="description"
+          type="text"
           formDisplayLabel="Description"
           defaultValue={defaultValues.description}
         />

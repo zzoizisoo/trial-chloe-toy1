@@ -43,7 +43,7 @@ export default () => {
               />
             )}
 
-            <Typography level="body-sm" my={5}>{post.content}</Typography>
+            <Typography level="body-sm" my={5} whiteSpace="break-spaces">{post.content}</Typography>
 
             {post.createdBy === Meteor.userId() && (
               <Button
