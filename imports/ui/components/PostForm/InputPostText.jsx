@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input, Typography } from "@mui/joy";
 
-export default ({ name, type , defaultValue, formDisplayLabel }) => {
+export default function InputPostText({ name, type , defaultValue, formDisplayLabel }) {
 
   return (
     <div style={{marginBottom: 20}}>

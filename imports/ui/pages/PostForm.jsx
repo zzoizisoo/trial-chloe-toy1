@@ -8,15 +8,16 @@ import { useMethod } from "../hooks";
 import { FlexBox, InputPostText, InputPostTextarea } from "../components";
 import { InputPostImage } from "../components/PostForm";
 
-export default ({ postId }) => {
+export default function PostForm({ postId }) {
   // if no postId -> creating new post
   // else -> editing post
   // onsubmit -> upsert post
 
   //🤔 isn't it re-rendered when useMethod set it's result? cuz post is state of the result.
-  const post = useMethod("getPost", postId); 
+  const post = useMethod("getPost", postId);
   const [newImage, setNewImage] = useState(undefined);
 
+  // 😡
   if(postId && !post) return <>Loading</>;
 
   const defaultValues = post
@@ -75,9 +76,8 @@ export default ({ postId }) => {
   };
 
   return (
-    <Box sx={{width: 800, mx: 'auto', mt: 3}}>
+    <Box sx={{ width: 800, mx: "auto", mt: 3 }}>
       <form onSubmit={handleSubmit} onChange={handleFormChange}>
-
         {/* TODO: Default values are not passed 🤔 */}
         <InputPostText
           name="title"
@@ -86,7 +86,6 @@ export default ({ postId }) => {
           defaultValue={defaultValues.title}
         />
 
-
         <InputPostText
           name="description"
           type="text"
@@ -94,20 +93,23 @@ export default ({ postId }) => {
           defaultValue={defaultValues.description}
         />
 
-       <InputPostImage 
-         name="imageUrl"
-         formDisplayLabel="Image"
-         image={newImage || post?.imageUrl}
-       />
-      
+        <InputPostImage
+          name="imageUrl"
+          formDisplayLabel="Image"
+          image={newImage || post?.imageUrl}
+        />
+
         <InputPostTextarea
           formDisplayLabel="Content"
           name="content"
           defaultValue={defaultValues.content}
         />
 
-        <FlexBox gap={10} justify="center" style={{marginTop: 50}}> 
-          <Button type="button" variant="outlined"> Cancel </Button>
+        <FlexBox gap={10} justify="center" style={{ marginTop: 50 }}>
+          <Button type="button" variant="outlined">
+            {" "}
+            Cancel{" "}
+          </Button>
           <Button type="submit"> Save </Button>
         </FlexBox>
       </form>
