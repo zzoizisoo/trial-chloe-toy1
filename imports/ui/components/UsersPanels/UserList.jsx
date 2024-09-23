@@ -19,7 +19,7 @@ export default function UserList({ handleSelectUser }) {
 
   // 🤔 If you dont call this function, no re-render will occur when the loading state change
   // w.o this call -> pagination after setting search input is not occur
-  console.log('userProfilesIsLoading?', usersProfilesLoading())
+  // usersProfilesLoading()
 
   const users = useTracker(
     () =>
@@ -42,7 +42,7 @@ export default function UserList({ handleSelectUser }) {
           }
         )
         .fetch(),
-    [searchInput, pageLength]
+    [searchInput, pageLength, usersProfilesLoading()]
   );
 
   const onInputChange = (e) => {
@@ -53,12 +53,10 @@ export default function UserList({ handleSelectUser }) {
   const onScroll = throttle(
     ({ target: { clientHeight, scrollHeight, scrollTop } }) => {
       const PAGING_THRESHHOLD = 100;
-      console.log('-------throttled: userProfilesLoading?', usersProfilesLoading())
       if (
         !usersProfilesLoading() &&
         Math.abs(scrollTop) + clientHeight + PAGING_THRESHHOLD > scrollHeight
       ) {
-        console.log('-------page length set', !usersProfilesLoading())
         setPageLength(pageLength + PAGINATION_SIZE);
       }
     },
