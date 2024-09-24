@@ -2,3 +2,6 @@ body {
   margin: 0px;
 }
 
+div{
+  word-break: break-word;
+}
