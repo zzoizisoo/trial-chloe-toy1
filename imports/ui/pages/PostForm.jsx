@@ -8,10 +8,13 @@ import { useMethod } from "../hooks";
 import { FlexBox, InputPostText, InputPostTextarea } from "../components";
 import { InputPostImage } from "../components/PostForm";
 
+/**
+* @param postId
+* form for create or (if postId) update post
+*/
 export default function PostForm({ postId }) {
-  // if no postId -> creating new post
-  // else -> editing post
-  // onsubmit -> upsert post
+
+  const userId = Meteor.userId()
 
   //🤔 isn't it re-rendered when useMethod set it's result? cuz post is state of the result.
   const post = useMethod("getPost", postId);
@@ -19,6 +22,7 @@ export default function PostForm({ postId }) {
 
   // 😡
   if(postId && !post) return <>Loading</>;
+  if(postId && post && userId !== post.createdBy) return <>권한이 없습니다</>
 
   const defaultValues = post
     ? {
@@ -74,6 +78,7 @@ export default function PostForm({ postId }) {
     const res = await Meteor.callAsync("upsertPost", newPost);
     FlowRouter.go(`/post/${postId || res.insertedId}`);
   };
+
 
   return (
     <Box sx={{ width: 800, mx: "auto", mt: 3 }}>

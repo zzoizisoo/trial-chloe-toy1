@@ -64,7 +64,7 @@ loggedIn.route('/post/:pid/edit', {
     name: 'post-edit',
     action({pid}){ 
         mount(PostWriteLayout, {
-            content: <PostForm postId={pid}/> 
+            content: <PostForm key={pid} postId={pid}/> 
         })
     }
 })
