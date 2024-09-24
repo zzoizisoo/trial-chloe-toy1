@@ -7,7 +7,7 @@ import ChatItem from "./ChatItem";
 
 export default function ChatList() {
   const user = useTracker(() => Meteor.user());
-  const PAGINATION_SIZE = 20;
+  const PAGINATION_SIZE = 10;
   const [pageLength, setPageLength] = useState(PAGINATION_SIZE);
 
   // CHATS
@@ -19,7 +19,6 @@ export default function ChatList() {
         { sort: { createdAt: -1 }, limit: pageLength }
       ).fetch(),
     [pageLength],
-    (prev, next) => prev.length > next.length
   );
 
   // PROFILES
